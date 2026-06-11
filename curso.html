@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conceptos del Entrenamiento por Potencia — Cycling Wolf Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .course-hero { padding: 28px 32px 32px; border-bottom: 0.5px solid var(--border); }
+    .breadcrumb { font-size: 11px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb span { color: var(--subtle); }
+    .course-layout { display: grid; grid-template-columns: 1fr 270px; gap: 32px; align-items: start; }
+    .course-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); background: var(--red-dim); padding: 4px 10px; border-radius: 4px; margin-bottom: 14px; }
+    .course-title { font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+    .course-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 18px; }
+    .course-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+    .meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .meta-item i { font-size: 14px; color: var(--subtle); }
+    .instructor-row { display: flex; align-items: center; gap: 10px; padding: 14px 0; border-top: 0.5px solid var(--border); }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--white); flex-shrink: 0; }
+    .instructor-name { font-size: 13px; font-weight: 500; color: var(--white); }
+    .instructor-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .course-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; position: sticky; top: 70px; }
+    .course-preview { width: 100%; height: 145px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; }
+    .preview-play { width: 46px; height: 46px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: transform 0.15s; }
+    .course-preview:hover .preview-play { transform: scale(1.08); }
+    .preview-label { position: absolute; bottom: 10px; left: 12px; font-size: 10px; color: var(--muted); background: rgba(0,0,0,0.6); padding: 3px 8px; border-radius: 4px; }
+    .course-card-body { padding: 16px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+    .price { font-size: 24px; font-weight: 600; color: var(--white); }
+    .price-period { font-size: 12px; color: var(--muted); }
+    .course-btns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .course-btns .btn-green, .course-btns .btn-outline { width: 100%; text-align: center; padding: 11px; }
+    .includes-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--subtle); margin-bottom: 10px; padding-top: 14px; border-top: 0.5px solid var(--border); }
+    .include-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+    .include-item i { font-size: 13px; color: var(--green); }
+    .tabs { display: flex; border-bottom: 0.5px solid var(--border); padding: 0 32px; overflow-x: auto; }
+    .tab { font-size: 13px; padding: 14px 18px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; transition: color 0.15s; }
+    .tab.active { color: var(--white); border-bottom-color: var(--red); }
+    .tab-content { padding: 36px 32px; }
+    .modulo { background: var(--card); border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+    .modulo-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .modulo-name { font-size: 13px; font-weight: 500; color: var(--white); display: flex; align-items: center; gap: 10px; }
+    .modulo-num { font-size: 11px; color: var(--red); font-weight: 600; }
+    .modulo-count { font-size: 11px; color: var(--muted); }
+    .modulo-lessons { border-top: 0.5px solid var(--border); }
+    .lesson { display: flex; align-items: center; gap: 10px; padding: 11px 18px; border-bottom: 0.5px solid var(--border); }
+    .lesson:last-child { border-bottom: none; }
+    .lesson-icon { font-size: 13px; color: var(--subtle); flex-shrink: 0; }
+    .lesson-name { font-size: 12px; color: var(--muted); flex: 1; line-height: 1.4; }
+    .lesson-duration { font-size: 11px; color: var(--subtle); }
+    .lesson-free { font-size: 10px; color: var(--green); background: var(--green-dim); padding: 2px 8px; border-radius: 3px; font-weight: 600; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 28px; }
+    .learns-list, .audience-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .learn-item, .audience-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .learn-item i { color: var(--green); font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+    .audience-item i { color: var(--red); font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .course-layout { grid-template-columns: 1fr; }
+      .course-hero { padding: 20px; }
+      .course-card { position: static; }
+      .tabs { padding: 0 20px; }
+      .tab-content { padding: 24px 20px; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="wolf-icon"><i class="ti ti-bolt"></i></div>
+      <div>
+        <div class="nav-brand">Cycling Wolf Academy</div>
+        <div class="nav-sub">La academia del ciclismo</div>
+      </div>
+    </div>
+    <a href="index.html" class="btn-outline" style="font-size:12px;padding:6px 14px"><i class="ti ti-arrow-left"></i> Volver</a>
+  </nav>
+
+  <div class="course-hero">
+    <div class="breadcrumb">
+      <a href="index.html" style="color:var(--muted);text-decoration:none">Inicio</a>
+      <span>›</span> Rendimiento y Entrenamiento <span>›</span> Conceptos del Entrenamiento por Potencia
+    </div>
+    <div class="course-layout">
+      <div>
+        <div class="course-badge"><i class="ti ti-activity"></i> Rendimiento y Entrenamiento</div>
+        <h1 class="course-title">Conceptos del Entrenamiento por Potencia</h1>
+        <p class="course-desc">Entiende los principios fisiológicos y las métricas que determinan tu rendimiento sobre la bicicleta. Desde el lactato hasta el torque, aprende a leer tu cuerpo y tu potenciómetro.</p>
+        <div class="course-meta">
+          <div class="meta-item"><i class="ti ti-video"></i> 7 cápsulas</div>
+          <div class="meta-item"><i class="ti ti-file-download"></i> Material descargable</div>
+          <div class="meta-item"><i class="ti ti-infinity"></i> Acceso de por vida</div>
+          <div class="meta-item"><i class="ti ti-certificate"></i> Certificado Wolf Academy</div>
+        </div>
+        <div class="instructor-row">
+          <div class="avatar">WB</div>
+          <div>
+            <div class="instructor-name">Wolfgang Burmann</div>
+            <div class="instructor-role">Escuela de Rendimiento y Entrenamiento</div>
+          </div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-preview">
+          <div class="preview-play"><i class="ti ti-player-play"></i></div>
+          <div class="preview-label">Vista previa gratuita</div>
+        </div>
+        <div class="course-card-body">
+          <div class="price-row"><div class="price">$39.900</div><div class="price-period">acceso completo</div></div>
+          <div class="course-btns">
+            <a href="#" class="btn-green">Comprar ahora</a>
+            <a href="#" class="btn-outline">Ver cápsula gratuita</a>
+          </div>
+          <div class="includes-title">Incluye</div>
+          <div class="include-item"><i class="ti ti-check"></i>7 cápsulas educativas</div>
+          <div class="include-item"><i class="ti ti-check"></i>Material descargable PDF</div>
+          <div class="include-item"><i class="ti ti-check"></i>Acceso de por vida</div>
+          <div class="include-item"><i class="ti ti-check"></i>Certificado Wolf Academy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">Contenido</div>
+    <div class="tab">¿Qué aprenderás?</div>
+    <div class="tab">¿Para quién?</div>
+  </div>
+
+  <div class="tab-content">
+    <div class="section-label" style="margin-bottom:16px">Módulos del curso</div>
+
+    <div class="modulo">
+      <div class="modulo-header">
+        <div class="modulo-name"><span class="modulo-num">01</span> Fisiología base</div>
+        <span class="modulo-count">3 cápsulas</span>
+      </div>
+      <div class="modulo-lessons">
+        <div class="lesson">
+          <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
+          <span class="lesson-name">¿Qué es el lactato?</span>
+          <span class="lesson-free">Gratis</span>
+        </div>
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">Consumo máximo de oxígeno (VO2max)</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">¿Qué tan glucolítico eres?</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modulo">
+      <div class="modulo-header">
+        <div class="modulo-name"><span class="modulo-num">02</span> Métricas de potencia</div>
+        <span class="modulo-count">2 cápsulas</span>
+      </div>
+      <div class="modulo-lessons">
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">FRC — Capacidad de trabajo anaeróbico</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">Torque en el ciclismo</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modulo">
+      <div class="modulo-header">
+        <div class="modulo-name"><span class="modulo-num">03</span> Aplicación práctica</div>
+        <span class="modulo-count">2 cápsulas</span>
+      </div>
+      <div class="modulo-lessons">
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">Entrenamientos de intervalos</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+        <div class="lesson">
+          <i class="ti ti-lock lesson-icon"></i>
+          <span class="lesson-name">Analizando un entrenamiento en TrainingPeaks</span>
+          <span class="lesson-duration">por definir</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="section-label">Lo que aprenderás</div>
+        <div class="learns-list">
+          <div class="learn-item"><i class="ti ti-check"></i>Entender qué es el lactato y cómo afecta tu rendimiento</div>
+          <div class="learn-item"><i class="ti ti-check"></i>Conocer tu VO2max y su importancia</div>
+          <div class="learn-item"><i class="ti ti-check"></i>Identificar tu perfil glucolítico como ciclista</div>
+          <div class="learn-item"><i class="ti ti-check"></i>Comprender el FRC y el torque</div>
+          <div class="learn-item"><i class="ti ti-check"></i>Diseñar y analizar entrenamientos de intervalos</div>
+          <div class="learn-item"><i class="ti ti-check"></i>Leer un entrenamiento real en TrainingPeaks</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">¿Para quién es?</div>
+        <div class="audience-list">
+          <div class="audience-item"><i class="ti ti-user-check"></i>Ciclistas que quieren entender su entrenamiento</div>
+          <div class="audience-item"><i class="ti ti-user-check"></i>Ciclistas con potenciómetro que no saben interpretarlo</div>
+          <div class="audience-item"><i class="ti ti-user-check"></i>Entrenadores que buscan actualizar conceptos</div>
+          <div class="audience-item"><i class="ti ti-user-check"></i>Triatletas y deportistas de resistencia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-copy">© 2025 Cycling Wolf Academy</div>
+    <div class="footer-family">
+      <a href="https://cyclingwolf.com" target="_blank">CyclingWolf</a>
+      <a href="https://wolftours.cl" target="_blank">Wolf Tours</a>
+      <a href="index.html">Wolf Academy</a>
+    </div>
+  </footer>
+
+</body>
+</html>
