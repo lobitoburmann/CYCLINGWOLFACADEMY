@@ -76,18 +76,18 @@ body { background: var(--black); color: var(--white); font-family: 'Inter', sans
 .school-name { font-size: 13px; font-weight: 500; color: var(--white); line-height: 1.35; }
 
 /* CAPSULAS */
-.capsulas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.capsulas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px; }
 .capsula-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
 .capsula-card:hover { border-color: var(--border-h); }
 .capsula-card:hover .play-btn { background: var(--red); border-color: var(--red); }
-.capsula-thumb { width: 100%; height: 120px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; }
+.capsula-thumb { width: 100%; height: 200px; background: #111; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .thumb-label { position: absolute; top: 10px; left: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
 .thumb-red { background: var(--red-dim); color: var(--red); }
 .play-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 17px; transition: background 0.15s, border-color 0.15s; }
 .thumb-duration { position: absolute; bottom: 8px; right: 10px; font-size: 10px; color: var(--muted); background: rgba(0,0,0,0.55); padding: 2px 7px; border-radius: 4px; }
 .capsula-body { padding: 14px 16px; }
 .capsula-school { font-size: 10px; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.08em; }
-.capsula-title { font-size: 13px; font-weight: 500; color: var(--white); line-height: 1.4; margin-bottom: 10px; }
+.capsula-title { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; margin-bottom: 12px; }
 .capsula-footer { display: flex; justify-content: space-between; align-items: center; }
 .capsula-free { font-size: 10px; color: var(--green); font-weight: 600; }
 .capsula-cta { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 3px; }

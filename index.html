@@ -324,6 +324,25 @@
         if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+
+    // Cargar miniaturas de Vimeo
+    document.querySelectorAll('.capsula-card[href*="vimeo"]').forEach(card => {
+      const url = card.getAttribute('href');
+      const id = url.match(/vimeo\.com\/(\d+)/)?.[1];
+      if (!id) return;
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const thumb = data[0]?.thumbnail_large;
+          if (thumb) {
+            const thumbDiv = card.querySelector('.capsula-thumb');
+            const img = document.createElement('img');
+            img.src = thumb;
+            img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.85;';
+            thumbDiv.insertBefore(img, thumbDiv.firstChild);
+          }
+        }).catch(() => {});
+    });
   </script>
 </body>
 </html>
