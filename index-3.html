@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cycling Wolf Academy — La Academia del Ciclismo</title>
+  <meta name="description" content="Aprende de entrenadores, biomecánicos, nutricionistas y mecánicos que han dedicado su vida al ciclismo. Sin importar tu nivel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <img src="jhlisto.png" alt="Wolf Academy" style="height:52px; width:auto;">
+    </div>
+    <div class="nav-links">
+      <a href="#escuelas">Escuelas</a>
+      <a href="#capsulas">Cursos</a>
+      <a href="#personalizados">Asesorías</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#membresias" class="btn-red">Inscribirse</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><i class="ti ti-menu-2"></i></button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#escuelas" onclick="toggleMenu()">Escuelas</a>
+    <a href="#capsulas" onclick="toggleMenu()">Cursos</a>
+    <a href="#personalizados" onclick="toggleMenu()">Asesorías</a>
+    <a href="#nosotros" onclick="toggleMenu()">Nosotros</a>
+    <a href="#membresias" class="btn-red" onclick="toggleMenu()">Inscribirse</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Cycling Wolf Academy · La academia del ciclismo</div>
+    <h1 class="hero-title">El conocimiento tiene valor cuando <em>se comparte</em></h1>
+    <p class="hero-desc">Aprende de entrenadores, biomecánicos, nutricionistas y mecánicos que han dedicado su vida al ciclismo. Sin importar tu nivel.</p>
+    <div class="hero-ctas">
+      <a href="#capsulas" class="btn-red">Ver cursos disponibles</a>
+      <a href="#nosotros" class="btn-outline">Conocer la academia</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Escuelas especializadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Formatos de aprendizaje</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Basado en experiencia real</div>
+    </div>
+  </section>
+
+  <!-- ESCUELAS -->
+  <section class="section" id="escuelas">
+    <div class="section-header">
+      <div class="section-label">Escuelas</div>
+      <div class="section-title">¿Qué quieres aprender?</div>
+    </div>
+    <div class="schools-grid">
+      <div class="school-card">
+        <div class="school-icon ic-red"><i class="ti ti-activity"></i></div>
+        <div class="school-name">Rendimiento y Entrenamiento</div>
+      </div>
+      <div class="school-card">
+        <div class="school-icon ic-green"><i class="ti ti-salad"></i></div>
+        <div class="school-name">Nutrición Deportiva</div>
+      </div>
+      <div class="school-card">
+        <div class="school-icon ic-red"><i class="ti ti-bike"></i></div>
+        <div class="school-name">Bikefit y Biomecánica</div>
+      </div>
+      <div class="school-card">
+        <div class="school-icon ic-gray"><i class="ti ti-tool"></i></div>
+        <div class="school-name">Escuela Técnica</div>
+      </div>
+      <div class="school-card">
+        <div class="school-icon ic-green"><i class="ti ti-trophy"></i></div>
+        <div class="school-name">Habilidades Ciclistas</div>
+      </div>
+      <div class="school-card">
+        <div class="school-icon ic-gray"><i class="ti ti-chart-bar"></i></div>
+        <div class="school-name">Gestión y Desarrollo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPSULAS GRATUITAS -->
+  <section class="section" id="capsulas">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Contenido gratuito</div>
+        <div class="section-title">Aprende antes de inscribirte</div>
+      </div>
+      <a href="#" class="section-link">Ver todo <i class="ti ti-arrow-right"></i></a>
+    </div>
+    <div class="capsulas-grid">
+      <div class="capsula-card">
+        <div class="capsula-thumb">
+          <span class="thumb-label thumb-red">Preview</span>
+          <div class="play-btn"><i class="ti ti-player-play"></i></div>
+          <span class="thumb-duration">por definir</span>
+        </div>
+        <div class="capsula-body">
+          <div class="capsula-school">Rendimiento y Entrenamiento</div>
+          <div class="capsula-title">¿Qué es el lactato?</div>
+          <div class="capsula-footer">
+            <span class="capsula-free">Gratis</span>
+            <span class="capsula-cta">Curso completo <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="capsula-card">
+        <div class="capsula-thumb">
+          <span class="thumb-label thumb-red">Preview</span>
+          <div class="play-btn"><i class="ti ti-player-play"></i></div>
+          <span class="thumb-duration">por definir</span>
+        </div>
+        <div class="capsula-body">
+          <div class="capsula-school">Rendimiento y Entrenamiento</div>
+          <div class="capsula-title">Consumo máximo de oxígeno (VO2max)</div>
+          <div class="capsula-footer">
+            <span class="capsula-free">Gratis</span>
+            <span class="capsula-cta">Curso completo <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="capsula-card">
+        <div class="capsula-thumb">
+          <span class="thumb-label thumb-red">Preview</span>
+          <div class="play-btn"><i class="ti ti-player-play"></i></div>
+          <span class="thumb-duration">por definir</span>
+        </div>
+        <div class="capsula-body">
+          <div class="capsula-school">Rendimiento y Entrenamiento</div>
+          <div class="capsula-title">¿Qué tan glucolítico eres?</div>
+          <div class="capsula-footer">
+            <span class="capsula-free">Gratis</span>
+            <span class="capsula-cta">Curso completo <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="capsula-card">
+        <div class="capsula-thumb">
+          <span class="thumb-label thumb-red">Preview</span>
+          <div class="play-btn"><i class="ti ti-player-play"></i></div>
+          <span class="thumb-duration">por definir</span>
+        </div>
+        <div class="capsula-body">
+          <div class="capsula-school">Rendimiento y Entrenamiento</div>
+          <div class="capsula-title">FRC — Capacidad de trabajo anaeróbico</div>
+          <div class="capsula-footer">
+            <span class="capsula-free">Gratis</span>
+            <span class="capsula-cta">Curso completo <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-cta">
+      <div>
+        <div class="bottom-cta-text">¿Te enganchó? Accede al curso completo.</div>
+        <div class="bottom-cta-sub">Cápsulas completas, entrevistas con el especialista y material descargable.</div>
+      </div>
+      <a href="curso.html" class="btn-red">Ver cursos</a>
+    </div>
+  </section>
+
+  <!-- SERVICIOS PERSONALIZADOS -->
+  <section class="section" id="personalizados">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Atención personalizada</div>
+        <div class="section-title">¿Necesitas algo específico?</div>
+      </div>
+    </div>
+    <p class="section-desc">Si lo que buscas no está en los cursos, o prefieres atención directa con un especialista — ya sea individual, una consulta puntual o para tu grupo.</p>
+    <div class="modalities">
+      <div class="mod-card featured">
+        <div class="mod-icon ic-red"><i class="ti ti-user"></i></div>
+        <div class="mod-name">Clase particular</div>
+        <div class="mod-desc">Sesión 1 a 1 con el especialista. Contenido y ritmo adaptado completamente a ti.</div>
+        <div class="mod-tags">
+          <span class="tag tag-red">1 a 1</span>
+          <span class="tag">Online o presencial</span>
+        </div>
+        <div class="mod-cta red">Solicitar clase <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon ic-gray"><i class="ti ti-help-circle"></i></div>
+        <div class="mod-name">Consulta específica</div>
+        <div class="mod-desc">¿Una duda puntual que ningún curso responde? Conéctate con el especialista adecuado.</div>
+        <div class="mod-tags">
+          <span class="tag">Tema puntual</span>
+          <span class="tag">Online</span>
+        </div>
+        <div class="mod-cta">Hacer una consulta <i class="ti ti-arrow-right"></i></div>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon ic-green"><i class="ti ti-users"></i></div>
+        <div class="mod-name">Clase grupal</div>
+        <div class="mod-desc">¿Tienes un club o equipo? Organizamos una sesión a medida para todos juntos.</div>
+        <div class="mod-tags">
+          <span class="tag tag-green">Grupos</span>
+          <span class="tag">A medida</span>
+        </div>
+        <div class="mod-cta green">Consultar para mi grupo <i class="ti ti-arrow-right"></i></div>
+      </div>
+    </div>
+    <div class="contact-bar">
+      <div class="contact-bar-left">
+        <div class="contact-icon"><i class="ti ti-message-circle"></i></div>
+        <div>
+          <div class="contact-text">¿No sabes cuál es la opción para ti?</div>
+          <div class="contact-sub">Escríbenos y te orientamos sin compromiso.</div>
+        </div>
+      </div>
+      <a href="https://wa.me/56991622815?text=Hola%2C%20quiero%20información%20sobre%20Cycling%20Wolf%20Academy" target="_blank" class="btn-green">Escribir por WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FORMATOS -->
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Formatos de aprendizaje</div>
+        <div class="section-title">Elige cómo aprender</div>
+      </div>
+    </div>
+    <div class="formats-grid">
+      <div class="format-pill"><div class="format-dot" style="background:#2EBD6B"></div><div><div class="format-name">Certificaciones</div><div class="format-desc">Con evaluación y diploma</div></div></div>
+      <div class="format-pill"><div class="format-dot" style="background:#D42B2B"></div><div><div class="format-name">Cursos</div><div class="format-desc">Online, presencial o híbrido</div></div></div>
+      <div class="format-pill"><div class="format-dot" style="background:#D42B2B"></div><div><div class="format-name">Talleres</div><div class="format-desc">Grupos reducidos, práctica real</div></div></div>
+      <div class="format-pill"><div class="format-dot" style="background:rgba(242,242,240,0.25)"></div><div><div class="format-name">Masterclass</div><div class="format-desc">Especialistas invitados</div></div></div>
+      <div class="format-pill"><div class="format-dot" style="background:#2EBD6B"></div><div><div class="format-name">Diplomados</div><div class="format-desc">Formación avanzada</div></div></div>
+    </div>
+  </section>
+
+  <!-- MANIFIESTO -->
+  <section class="manifesto" id="nosotros">
+    <div class="manifesto-tag">Manifiesto</div>
+    <div class="manifesto-text">"Wolf Academy no busca ser la voz de una sola persona. Busca convertirse en la <span>casa del conocimiento ciclista</span>."</div>
+  </section>
+
+  <!-- CONSEJO ACADÉMICO -->
+  <section class="section council">
+    <div class="section-label">Consejo académico</div>
+    <p class="council-desc">Wolf Academy está respaldada por un consejo de especialistas, entrenadores y referentes de distintas áreas del ciclismo, cuya experiencia contribuye al desarrollo de programas formativos de alto nivel.</p>
+    <div class="council-areas">
+      <div class="council-pill"><i class="ti ti-activity" style="color:#D42B2B"></i>Entrenamiento deportivo</div>
+      <div class="council-pill"><i class="ti ti-salad" style="color:#2EBD6B"></i>Nutrición deportiva</div>
+      <div class="council-pill"><i class="ti ti-bike" style="color:#D42B2B"></i>Bikefit y biomecánica</div>
+      <div class="council-pill"><i class="ti ti-tool" style="color:rgba(242,242,240,0.3)"></i>Mecánica y técnica</div>
+      <div class="council-pill"><i class="ti ti-flag" style="color:#2EBD6B"></i>Gestión y eventos</div>
+      <div class="council-pill"><i class="ti ti-certificate" style="color:#D42B2B"></i>Reglamentación</div>
+    </div>
+  </section>
+
+  <!-- CTA MEMBRESÍAS -->
+  <section class="cta-bar" id="membresias">
+    <div>
+      <div class="cta-bar-text">¿Quieres ser parte de la manada?</div>
+      <div class="cta-bar-sub">Accede a todos los cursos con membresía mensual</div>
+    </div>
+    <a href="#" class="btn-green">Ver membresías</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-copy">© 2025 Cycling Wolf Academy</div>
+    <div class="footer-family">
+      <a href="https://cyclingwolf.com" target="_blank">CyclingWolf</a>
+      <a href="https://wolftours.cl" target="_blank">Wolf Tours</a>
+      <a href="#">Wolf Academy</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>
