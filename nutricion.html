@@ -219,13 +219,21 @@
       div.onclick = () => playVideo(cap.id);
       div.innerHTML = `
         <div class="lesson-thumb-wrap">
-          <img class="lesson-thumb" src="https://vumbnail.com/${cap.id}.jpg" alt="${cap.title}">
+          <img class="lesson-thumb" id="thumb-${cap.id}" src="" alt="${cap.title}" style="background:#1a1a1a;">
           <div class="lesson-thumb-play"><i class="ti ti-player-play"></i></div>
         </div>
         <span class="lesson-name">${cap.title}</span>
         <span class="lesson-free">Gratis</span>
       `;
       list.appendChild(div);
+
+      // Cargar miniatura desde Vimeo
+      fetch(`https://vimeo.com/api/v2/video/${cap.id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const thumb = data[0]?.thumbnail_medium;
+          if (thumb) document.getElementById(`thumb-${cap.id}`).src = thumb;
+        }).catch(() => {});
     });
 
     // Cargar miniatura principal
