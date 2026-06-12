@@ -106,7 +106,7 @@
         <div class="course-title">Nutrición para Ciclistas</div>
         <!-- VIDEO GRANDE -->
         <div class="course-video-main">
-          <iframe src="https://player.vimeo.com/video/1200798376" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <iframe id="mainVideo" src="https://player.vimeo.com/video/1199731235" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="course-desc" style="margin-top:16px;">Aprende cómo alimentarte para rendir mejor sobre la bicicleta. Desde la composición de macronutrientes hasta estrategias de hidratación y recuperación.</div>
         <div class="course-meta">
@@ -159,40 +159,30 @@
         <span class="modulo-count">5 cápsulas</span>
       </div>
       <div class="modulo-lessons">
-        <div class="lesson">
-          <a href="https://vimeo.com/1200798376" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+        <div class="lesson" onclick="playVideo('1200798376')" style="cursor:pointer;">
             <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
             <span class="lesson-name">Introducción a la nutrición</span>
             <span class="lesson-free">Gratis</span>
-          </a>
         </div>
-        <div class="lesson">
-          <a href="https://vimeo.com/1200800543" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+        <div class="lesson" onclick="playVideo('1200800543')" style="cursor:pointer;">
             <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
             <span class="lesson-name">Zonas energéticas</span>
             <span class="lesson-free">Gratis</span>
-          </a>
         </div>
-        <div class="lesson">
-          <a href="https://vimeo.com/1200802502" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+        <div class="lesson" onclick="playVideo('1200802502')" style="cursor:pointer;">
             <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
             <span class="lesson-name">¿Por qué carbohidratos?</span>
             <span class="lesson-free">Gratis</span>
-          </a>
         </div>
-        <div class="lesson">
-          <a href="https://vimeo.com/1200804444" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+        <div class="lesson" onclick="playVideo('1200804444')" style="cursor:pointer;">
             <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
             <span class="lesson-name">Glucógeno</span>
             <span class="lesson-free">Gratis</span>
-          </a>
         </div>
-        <div class="lesson">
-          <a href="https://vimeo.com/1200806304" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+        <div class="lesson" onclick="playVideo('1200806304')" style="cursor:pointer;">
             <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
             <span class="lesson-name">¿Qué es y cuándo ocurre una pájara?</span>
             <span class="lesson-free">Gratis</span>
-          </a>
         </div>
       </div>
     </div>
@@ -222,6 +212,11 @@
   <script>
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function playVideo(id) {
+      const iframe = document.getElementById('mainVideo');
+      iframe.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1';
+      iframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     // Cargar miniatura de Vimeo
     fetch('https://vimeo.com/api/v2/video/1199731235.json')
