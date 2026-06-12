@@ -49,11 +49,16 @@
     .modulo-num { font-size: 11px; color: var(--green); font-weight: 600; }
     .modulo-count { font-size: 11px; color: var(--muted); }
     .modulo-lessons { border-top: 0.5px solid var(--border); }
-    .lesson { display: flex; align-items: center; gap: 10px; padding: 11px 18px; border-bottom: 0.5px solid var(--border); }
+    .lesson { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-bottom: 0.5px solid var(--border); cursor:pointer; transition: background 0.15s; }
     .lesson:last-child { border-bottom: none; }
+    .lesson:hover { background: rgba(255,255,255,0.03); }
+    .lesson-thumb { width: 80px; height: 48px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: #1a1a1a; }
+    .lesson-thumb-wrap { position: relative; flex-shrink: 0; }
+    .lesson-thumb-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 6px; }
+    .lesson-thumb-play i { font-size: 16px; color: #fff; }
     .lesson-icon { font-size: 14px; color: var(--subtle); flex-shrink: 0; }
     .lesson-name { font-size: 13px; color: var(--white); flex: 1; }
-    .lesson-free { font-size: 10px; color: var(--green); font-weight: 600; }
+    .lesson-free { font-size: 10px; color: var(--green); font-weight: 600; flex-shrink: 0; }
     .pdf-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; margin-top: 16px; }
     .pdf-icon { width: 40px; height: 40px; background: rgba(46,189,107,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 20px; flex-shrink: 0; }
     .pdf-name { font-size: 13px; font-weight: 500; color: var(--white); }
@@ -110,7 +115,7 @@
         </div>
         <div class="course-desc" style="margin-top:16px;">Aprende cómo alimentarte para rendir mejor sobre la bicicleta. Desde la composición de macronutrientes hasta estrategias de hidratación y recuperación.</div>
         <div class="course-meta">
-          <div class="meta-item"><i class="ti ti-video"></i> 5 cápsulas</div>
+          <div class="meta-item"><i class="ti ti-video"></i> 9 cápsulas</div>
           <div class="meta-item"><i class="ti ti-file-text"></i> Material descargable PDF</div>
           <div class="meta-item"><i class="ti ti-clock"></i> Acceso de por vida</div>
           <div class="meta-item"><i class="ti ti-certificate"></i> Certificado Wolf Academy</div>
@@ -156,35 +161,9 @@
     <div class="modulo">
       <div class="modulo-header">
         <div class="modulo-name"><span class="modulo-num">01</span> Nutrición para ciclistas</div>
-        <span class="modulo-count">5 cápsulas</span>
+        <span class="modulo-count">9 cápsulas</span>
       </div>
-      <div class="modulo-lessons">
-        <div class="lesson" onclick="playVideo('1200798376')" style="cursor:pointer;">
-            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
-            <span class="lesson-name">Introducción a la nutrición</span>
-            <span class="lesson-free">Gratis</span>
-        </div>
-        <div class="lesson" onclick="playVideo('1200800543')" style="cursor:pointer;">
-            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
-            <span class="lesson-name">Zonas energéticas</span>
-            <span class="lesson-free">Gratis</span>
-        </div>
-        <div class="lesson" onclick="playVideo('1200802502')" style="cursor:pointer;">
-            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
-            <span class="lesson-name">¿Por qué carbohidratos?</span>
-            <span class="lesson-free">Gratis</span>
-        </div>
-        <div class="lesson" onclick="playVideo('1200804444')" style="cursor:pointer;">
-            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
-            <span class="lesson-name">Glucógeno</span>
-            <span class="lesson-free">Gratis</span>
-        </div>
-        <div class="lesson" onclick="playVideo('1200806304')" style="cursor:pointer;">
-            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
-            <span class="lesson-name">¿Qué es y cuándo ocurre una pájara?</span>
-            <span class="lesson-free">Gratis</span>
-        </div>
-      </div>
+      <div class="modulo-lessons" id="lessonList"></div>
     </div>
 
     <div class="section-label" style="margin-bottom:12px;margin-top:28px">Material descargable</div>
@@ -213,12 +192,43 @@
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
     }
+    
+    const capsulas = [
+      { id: '1200798376', title: 'Introducción a la nutrición' },
+      { id: '1200800543', title: 'Zonas energéticas' },
+      { id: '1200802502', title: '¿Por qué carbohidratos?' },
+      { id: '1200804444', title: 'Glucógeno' },
+      { id: '1200806304', title: '¿Qué es y cuándo ocurre una pájara?' },
+      { id: '1200823094', title: '¿Por qué la diferencia entre ciclistas?' },
+      { id: '1200827118', title: '¿Cuánto se necesita?' },
+      { id: '1200829307', title: '30, 60 y 90 — números mágicos' },
+      { id: '1200832231', title: '¿Ingerir es lo mismo que absorber?' },
+    ];
+
     function playVideo(id) {
       const iframe = document.getElementById('mainVideo');
       iframe.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1';
       iframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    // Cargar miniatura de Vimeo
+
+    // Generar lista de lecciones con miniaturas
+    const list = document.getElementById('lessonList');
+    capsulas.forEach((cap, i) => {
+      const div = document.createElement('div');
+      div.className = 'lesson';
+      div.onclick = () => playVideo(cap.id);
+      div.innerHTML = `
+        <div class="lesson-thumb-wrap">
+          <img class="lesson-thumb" src="https://vumbnail.com/${cap.id}.jpg" alt="${cap.title}">
+          <div class="lesson-thumb-play"><i class="ti ti-player-play"></i></div>
+        </div>
+        <span class="lesson-name">${cap.title}</span>
+        <span class="lesson-free">Gratis</span>
+      `;
+      list.appendChild(div);
+    });
+
+    // Cargar miniatura principal
     fetch('https://vimeo.com/api/v2/video/1199731235.json')
       .then(r => r.json())
       .then(data => {
