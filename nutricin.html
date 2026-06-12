@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrición para Ciclistas — Cycling Wolf Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .course-hero { padding: 28px 32px 32px; border-bottom: 0.5px solid var(--border); }
+    .breadcrumb { font-size: 11px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb span { color: var(--subtle); }
+    .course-layout { display: grid; grid-template-columns: 1fr 270px; gap: 32px; align-items: start; }
+    .course-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green); background: rgba(46,189,107,0.1); padding: 4px 10px; border-radius: 4px; margin-bottom: 14px; }
+    .course-title { font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+    .course-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 18px; }
+    .course-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+    .meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .meta-item i { font-size: 14px; color: var(--subtle); }
+    .instructor-row { display: flex; align-items: center; gap: 10px; padding: 14px 0; border-top: 0.5px solid var(--border); }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--white); flex-shrink: 0; }
+    .instructor-name { font-size: 13px; font-weight: 500; color: var(--white); }
+    .instructor-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .course-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; position: sticky; top: 70px; }
+    .course-preview { width: 100%; height: 160px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; overflow: hidden; }
+    .course-video-main { width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 12px; overflow: hidden; margin-bottom: 24px; position: relative; }
+    .course-video-main iframe { width: 100%; height: 100%; border: none; }
+    .preview-play { width: 46px; height: 46px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; transition: transform 0.15s; z-index: 2; }
+    .course-preview:hover .preview-play { transform: scale(1.08); }
+    .preview-label { position: absolute; bottom: 10px; left: 12px; font-size: 10px; color: var(--muted); background: rgba(0,0,0,0.6); padding: 3px 8px; border-radius: 4px; z-index: 2; }
+    .course-card-body { padding: 16px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+    .price { font-size: 24px; font-weight: 600; color: var(--white); }
+    .price-period { font-size: 12px; color: var(--muted); }
+    .course-btns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .course-btns .btn-green, .course-btns .btn-outline { width: 100%; text-align: center; padding: 11px; }
+    .includes-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--subtle); margin-bottom: 10px; padding-top: 14px; border-top: 0.5px solid var(--border); }
+    .include-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+    .include-item i { font-size: 13px; color: var(--green); }
+    .tabs { display: flex; border-bottom: 0.5px solid var(--border); padding: 0 32px; overflow-x: auto; }
+    .tab { font-size: 13px; padding: 14px 18px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; transition: color 0.15s; }
+    .tab.active { color: var(--white); border-bottom-color: var(--green); }
+    .tab-content { padding: 36px 32px; }
+    .modulo { background: var(--card); border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+    .modulo-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .modulo-name { font-size: 13px; font-weight: 500; color: var(--white); display: flex; align-items: center; gap: 10px; }
+    .modulo-num { font-size: 11px; color: var(--green); font-weight: 600; }
+    .modulo-count { font-size: 11px; color: var(--muted); }
+    .modulo-lessons { border-top: 0.5px solid var(--border); }
+    .lesson { display: flex; align-items: center; gap: 10px; padding: 11px 18px; border-bottom: 0.5px solid var(--border); }
+    .lesson:last-child { border-bottom: none; }
+    .lesson-icon { font-size: 14px; color: var(--subtle); flex-shrink: 0; }
+    .lesson-name { font-size: 13px; color: var(--white); flex: 1; }
+    .lesson-free { font-size: 10px; color: var(--green); font-weight: 600; }
+    .pdf-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+    .pdf-icon { width: 40px; height: 40px; background: rgba(46,189,107,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 20px; flex-shrink: 0; }
+    .pdf-name { font-size: 13px; font-weight: 500; color: var(--white); }
+    .pdf-type { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .pdf-download { margin-left: auto; font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; text-decoration: none; }
+    @media (max-width: 768px) { .course-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="wolf-icon"><i class="ti ti-bolt"></i></div>
+      <div>
+        <div class="nav-brand">Cycling Wolf Academy</div>
+        <div class="nav-sub">La academia del ciclismo</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html#escuelas">Escuelas</a>
+      <a href="index.html#capsulas">Cursos</a>
+      <a href="index.html#personalizados">Asesorías</a>
+      <a href="index.html#nosotros">Nosotros</a>
+      <a href="index.html#membresias" class="btn-red">Inscribirse</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><i class="ti ti-menu-2"></i></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#escuelas" onclick="toggleMenu()">Escuelas</a>
+    <a href="index.html#capsulas" onclick="toggleMenu()">Cursos</a>
+    <a href="index.html#personalizados" onclick="toggleMenu()">Asesorías</a>
+    <a href="index.html#nosotros" onclick="toggleMenu()">Nosotros</a>
+    <a href="index.html#membresias" class="btn-red" onclick="toggleMenu()">Inscribirse</a>
+  </div>
+
+  <div class="course-hero">
+    <div class="breadcrumb">
+      <a href="index.html" style="color:var(--muted);text-decoration:none;">Inicio</a>
+      <span>›</span>
+      <a href="index.html#escuelas" style="color:var(--muted);text-decoration:none;">Nutrición Deportiva</a>
+      <span>›</span>
+      Nutrición para Ciclistas
+    </div>
+
+    <!-- VIDEO GRANDE -->
+    <div class="course-video-main">
+      <iframe src="https://player.vimeo.com/video/1199731235" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="course-layout">
+      <div>
+        <div class="course-badge"><i class="ti ti-salad"></i> NUTRICIÓN DEPORTIVA</div>
+        <div class="course-title">Nutrición para Ciclistas</div>
+        <div class="course-desc">Aprende cómo alimentarte para rendir mejor sobre la bicicleta. Desde la composición de macronutrientes hasta estrategias de hidratación y recuperación.</div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="ti ti-video"></i> 1 clase completa</div>
+          <div class="meta-item"><i class="ti ti-file-text"></i> Material descargable PDF</div>
+          <div class="meta-item"><i class="ti ti-clock"></i> Acceso de por vida</div>
+          <div class="meta-item"><i class="ti ti-certificate"></i> Certificado Wolf Academy</div>
+        </div>
+        <div class="instructor-row">
+          <div class="avatar">WB</div>
+          <div>
+            <div class="instructor-name">Wolfgang Burmann</div>
+            <div class="instructor-role">Escuela de Nutrición Deportiva</div>
+          </div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-preview" id="coursePreview">
+          <div class="preview-play"><i class="ti ti-player-play"></i></div>
+          <div class="preview-label">Vista previa gratuita</div>
+        </div>
+        <div class="course-card-body">
+          <div class="price-row"><div class="price" style="color:var(--green)">Gratis</div><div class="price-period">acceso completo</div></div>
+          <div class="course-btns">
+            <a href="https://vimeo.com/1199731235" target="_blank" class="btn-green">Ver clase ahora</a>
+            <a href="https://drive.google.com/file/d/1zcjNy4pBcJkgTLHqEbK5QswataOguVxg/view?usp=sharing" target="_blank" class="btn-outline">Descargar PDF</a>
+          </div>
+          <div class="includes-title">Incluye</div>
+          <div class="include-item"><i class="ti ti-check"></i>Clase completa en video</div>
+          <div class="include-item"><i class="ti ti-check"></i>Material descargable PDF</div>
+          <div class="include-item"><i class="ti ti-check"></i>Acceso de por vida</div>
+          <div class="include-item"><i class="ti ti-check"></i>Certificado Wolf Academy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">Contenido</div>
+    <div class="tab">¿Qué aprenderás?</div>
+    <div class="tab">¿Para quién?</div>
+  </div>
+
+  <div class="tab-content">
+    <div class="section-label" style="margin-bottom:16px">Módulos del curso</div>
+
+    <div class="modulo">
+      <div class="modulo-header">
+        <div class="modulo-name"><span class="modulo-num">01</span> Nutrición para ciclistas</div>
+        <span class="modulo-count">1 clase</span>
+      </div>
+      <div class="modulo-lessons">
+        <div class="lesson">
+          <a href="https://vimeo.com/1199731235" target="_blank" style="display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:inherit;">
+            <i class="ti ti-player-play lesson-icon" style="color:var(--green)"></i>
+            <span class="lesson-name">Nutrición para ciclistas — Clase completa</span>
+            <span class="lesson-free">Gratis</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;margin-top:28px">Material descargable</div>
+    <a href="https://drive.google.com/file/d/1zcjNy4pBcJkgTLHqEbK5QswataOguVxg/view?usp=sharing" target="_blank" class="pdf-card" style="text-decoration:none;">
+      <div class="pdf-icon"><i class="ti ti-file-text"></i></div>
+      <div>
+        <div class="pdf-name">Guía de Nutrición para Ciclistas</div>
+        <div class="pdf-type">PDF · Material de apoyo</div>
+      </div>
+      <a href="https://drive.google.com/file/d/1zcjNy4pBcJkgTLHqEbK5QswataOguVxg/view?usp=sharing" target="_blank" class="pdf-download">
+        <i class="ti ti-download"></i> Descargar
+      </a>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-copy">© 2025 Cycling Wolf Academy</div>
+    <div class="footer-family">
+      <a href="https://cyclingwolf.com" target="_blank">CyclingWolf</a>
+      <a href="https://wolftours.cl" target="_blank">Wolf Tours</a>
+      <a href="index.html">Wolf Academy</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    // Cargar miniatura de Vimeo
+    fetch('https://vimeo.com/api/v2/video/1199731235.json')
+      .then(r => r.json())
+      .then(data => {
+        const thumb = data[0]?.thumbnail_large;
+        if (thumb) {
+          const preview = document.getElementById('coursePreview');
+          const img = document.createElement('img');
+          img.src = thumb;
+          img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.7;';
+          preview.insertBefore(img, preview.firstChild);
+        }
+      }).catch(() => {});
+  </script>
+</body>
+</html>
