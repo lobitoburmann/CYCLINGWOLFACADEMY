@@ -227,13 +227,15 @@
       `;
       list.appendChild(div);
 
-      // Cargar miniatura desde Vimeo
-      fetch(`https://vimeo.com/api/v2/video/${cap.id}.json`)
-        .then(r => r.json())
-        .then(data => {
-          const thumb = data[0]?.thumbnail_medium;
-          if (thumb) document.getElementById(`thumb-${cap.id}`).src = thumb;
-        }).catch(() => {});
+      // Cargar miniatura con delay para no saturar la API
+      setTimeout(() => {
+        fetch(`https://vimeo.com/api/v2/video/${cap.id}.json`)
+          .then(r => r.json())
+          .then(data => {
+            const thumb = data[0]?.thumbnail_medium;
+            if (thumb) document.getElementById(`thumb-${cap.id}`).src = thumb;
+          }).catch(() => {});
+      }, i * 300);
     });
 
     // Cargar miniatura principal
