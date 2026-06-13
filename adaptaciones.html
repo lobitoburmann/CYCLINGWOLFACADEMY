@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptaciones Centrales y Periféricas — Cycling Wolf Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .course-hero { padding: 28px 32px 32px; border-bottom: 0.5px solid var(--border); }
+    .breadcrumb { font-size: 11px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .breadcrumb span { color: var(--subtle); }
+    .course-layout { display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; }
+    .course-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); background: rgba(212,43,43,0.1); padding: 4px 10px; border-radius: 4px; margin-bottom: 14px; }
+    .course-title { font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+    .course-video-main { width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 12px; overflow: hidden; position: relative; margin: 16px 0; }
+    .course-video-main iframe { width: 100%; height: 100%; border: none; }
+    .course-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 18px; }
+    .course-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+    .meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .meta-item i { font-size: 14px; color: var(--subtle); }
+    .instructor-row { display: flex; align-items: center; gap: 10px; padding: 14px 0; border-top: 0.5px solid var(--border); }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; background: #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--white); flex-shrink: 0; }
+    .instructor-name { font-size: 13px; font-weight: 500; color: var(--white); }
+    .instructor-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .course-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; position: sticky; top: 70px; }
+    .course-preview { width: 100%; height: 160px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; overflow: hidden; }
+    .preview-play { width: 46px; height: 46px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; z-index: 2; }
+    .preview-label { position: absolute; bottom: 10px; left: 12px; font-size: 10px; color: var(--muted); background: rgba(0,0,0,0.6); padding: 3px 8px; border-radius: 4px; z-index: 2; }
+    .course-card-body { padding: 16px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+    .price { font-size: 24px; font-weight: 600; color: var(--white); }
+    .price-period { font-size: 12px; color: var(--muted); }
+    .course-btns { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .course-btns .btn-red, .course-btns .btn-outline { width: 100%; text-align: center; padding: 11px; }
+    .includes-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--subtle); margin-bottom: 10px; padding-top: 14px; border-top: 0.5px solid var(--border); }
+    .include-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+    .include-item i { font-size: 13px; color: var(--green); }
+    .tabs { display: flex; border-bottom: 0.5px solid var(--border); padding: 0 32px; }
+    .tab { font-size: 13px; padding: 14px 18px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; transition: color 0.15s; }
+    .tab.active { color: var(--white); border-bottom-color: var(--red); }
+    .tab-content { padding: 36px 32px; }
+    .modulo { background: var(--card); border: 0.5px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+    .modulo-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .modulo-name { font-size: 13px; font-weight: 500; color: var(--white); display: flex; align-items: center; gap: 10px; }
+    .modulo-num { font-size: 11px; color: var(--red); font-weight: 600; }
+    .modulo-count { font-size: 11px; color: var(--muted); }
+    .modulo-lessons { border-top: 0.5px solid var(--border); }
+    .lesson { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.15s; }
+    .lesson:last-child { border-bottom: none; }
+    .lesson:hover { background: rgba(255,255,255,0.03); }
+    .lesson-thumb-wrap { position: relative; flex-shrink: 0; }
+    .lesson-thumb { width: 80px; height: 48px; border-radius: 6px; object-fit: cover; background: #1a1a1a; }
+    .lesson-thumb-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 6px; }
+    .lesson-thumb-play i { font-size: 16px; color: #fff; }
+    .lesson-name { font-size: 13px; color: var(--white); flex: 1; }
+    .lesson-free { font-size: 10px; color: var(--green); font-weight: 600; flex-shrink: 0; }
+    @media (max-width: 768px) { .course-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="wolf-icon"><i class="ti ti-bolt"></i></div>
+      <div>
+        <div class="nav-brand">Cycling Wolf Academy</div>
+        <div class="nav-sub">La academia del ciclismo</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html#escuelas">Escuelas</a>
+      <a href="index.html#capsulas">Cursos</a>
+      <a href="index.html#personalizados">Asesorías</a>
+      <a href="index.html#nosotros">Nosotros</a>
+      <a href="index.html#membresias" class="btn-red">Inscribirse</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><i class="ti ti-menu-2"></i></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#escuelas" onclick="toggleMenu()">Escuelas</a>
+    <a href="index.html#capsulas" onclick="toggleMenu()">Cursos</a>
+    <a href="index.html#personalizados" onclick="toggleMenu()">Asesorías</a>
+    <a href="index.html#nosotros" onclick="toggleMenu()">Nosotros</a>
+    <a href="index.html#membresias" class="btn-red" onclick="toggleMenu()">Inscribirse</a>
+  </div>
+
+  <div class="course-hero">
+    <div class="breadcrumb">
+      <a href="index.html" style="color:var(--muted);text-decoration:none;">Inicio</a>
+      <span>›</span>
+      <a href="index.html#escuelas" style="color:var(--muted);text-decoration:none;">Rendimiento y Entrenamiento</a>
+      <span>›</span>
+      Adaptaciones Centrales y Periféricas
+    </div>
+
+    <div class="course-layout">
+      <div>
+        <div class="course-badge"><i class="ti ti-bolt"></i> RENDIMIENTO Y ENTRENAMIENTO</div>
+        <div class="course-title">Adaptaciones Centrales y Periféricas</div>
+
+        <div class="course-video-main">
+          <iframe id="mainVideo" src="https://player.vimeo.com/video/1200850413" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="course-desc">Entiende qué cambios ocurren en tu cuerpo cuando entrenas. Desde las adaptaciones cardiovasculares centrales hasta las musculares periféricas — la base fisiológica del rendimiento ciclista.</div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="ti ti-video"></i> 3 cápsulas</div>
+          <div class="meta-item"><i class="ti ti-clock"></i> Acceso de por vida</div>
+          <div class="meta-item"><i class="ti ti-certificate"></i> Certificado Wolf Academy</div>
+        </div>
+        <div class="instructor-row">
+          <div class="avatar">WB</div>
+          <div>
+            <div class="instructor-name">Wolfgang Burmann</div>
+            <div class="instructor-role">Escuela de Rendimiento y Entrenamiento</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-preview" id="coursePreview">
+          <div class="preview-play"><i class="ti ti-player-play"></i></div>
+          <div class="preview-label">Vista previa gratuita</div>
+        </div>
+        <div class="course-card-body">
+          <div class="price-row"><div class="price" style="color:var(--green)">Gratis</div><div class="price-period">acceso completo</div></div>
+          <div class="course-btns">
+            <a href="https://vimeo.com/1200850413" target="_blank" class="btn-red">Ver curso ahora</a>
+          </div>
+          <div class="includes-title">Incluye</div>
+          <div class="include-item"><i class="ti ti-check"></i>3 cápsulas en video</div>
+          <div class="include-item"><i class="ti ti-check"></i>Acceso de por vida</div>
+          <div class="include-item"><i class="ti ti-check"></i>Certificado Wolf Academy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">Contenido</div>
+  </div>
+
+  <div class="tab-content">
+    <div class="section-label" style="margin-bottom:16px">Cápsulas del curso</div>
+    <div class="modulo">
+      <div class="modulo-header">
+        <div class="modulo-name"><span class="modulo-num">01</span> Adaptaciones al entrenamiento</div>
+        <span class="modulo-count">3 cápsulas</span>
+      </div>
+      <div class="modulo-lessons" id="lessonList"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-copy">© 2025 Cycling Wolf Academy</div>
+    <div class="footer-family">
+      <a href="https://cyclingwolf.com" target="_blank">CyclingWolf</a>
+      <a href="https://wolftours.cl" target="_blank">Wolf Tours</a>
+      <a href="index.html">Wolf Academy</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    const capsulas = [
+      { id: '1200850413', title: '¿Qué mejora cuando entreno?' },
+      { id: '1200858220', title: 'Adaptaciones centrales' },
+      { id: '1200912962', title: 'Adaptaciones periféricas' },
+    ];
+
+    function playVideo(id) {
+      const iframe = document.getElementById('mainVideo');
+      iframe.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1';
+      iframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    const list = document.getElementById('lessonList');
+    capsulas.forEach((cap, i) => {
+      const div = document.createElement('div');
+      div.className = 'lesson';
+      div.onclick = () => playVideo(cap.id);
+      div.innerHTML = `
+        <div class="lesson-thumb-wrap">
+          <img class="lesson-thumb" id="thumb-${cap.id}" src="" alt="${cap.title}">
+          <div class="lesson-thumb-play"><i class="ti ti-player-play"></i></div>
+        </div>
+        <span class="lesson-name">${cap.title}</span>
+        <span class="lesson-free">Gratis</span>
+      `;
+      list.appendChild(div);
+      setTimeout(() => {
+        fetch(`https://vimeo.com/api/v2/video/${cap.id}.json`)
+          .then(r => r.json())
+          .then(data => {
+            const thumb = data[0]?.thumbnail_medium;
+            if (thumb) document.getElementById(`thumb-${cap.id}`).src = thumb;
+          }).catch(() => {});
+      }, i * 300);
+    });
+
+    // Miniatura principal
+    fetch('https://vimeo.com/api/v2/video/1200850413.json')
+      .then(r => r.json())
+      .then(data => {
+        const thumb = data[0]?.thumbnail_large;
+        if (thumb) {
+          const preview = document.getElementById('coursePreview');
+          const img = document.createElement('img');
+          img.src = thumb;
+          img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.7;';
+          preview.insertBefore(img, preview.firstChild);
+        }
+      }).catch(() => {});
+  </script>
+</body>
+</html>
