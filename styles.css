@@ -76,7 +76,7 @@ body { background: var(--black); color: var(--white); font-family: 'Inter', sans
 .school-name { font-size: 13px; font-weight: 500; color: var(--white); line-height: 1.35; }
 
 /* CAPSULAS */
-.capsulas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px; }
+.capsulas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 24px; }
 .capsula-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
 .capsula-card:hover { border-color: var(--border-h); }
 .capsula-card:hover .play-btn { background: var(--red); border-color: var(--red); }
