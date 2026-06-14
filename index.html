@@ -369,7 +369,7 @@
             const thumbDiv = card.querySelector('.capsula-thumb');
             const img = document.createElement('img');
             img.src = thumb;
-            img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.85;';
+            img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:1;background:#111;';
             thumbDiv.insertBefore(img, thumbDiv.firstChild);
           }
         }).catch(() => {});
@@ -391,7 +391,7 @@
             const thumbDiv = card.querySelector('.capsula-thumb');
             const img = document.createElement('img');
             img.src = thumb;
-            img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.85;';
+            img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:1;background:#111;';
             thumbDiv.insertBefore(img, thumbDiv.firstChild);
           }
         }).catch(() => {});
