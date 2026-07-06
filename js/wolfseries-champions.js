@@ -6,11 +6,11 @@
   const IMAGE_BASE = 'images/wolfseries/';
 
   const CATEGORY_FILES = {
-    general: 'lider-general-2026.png',
-    montana: 'rey-montana-2026.png',
-    volantes: 'metas-volantes-2026.png',
-    combativo: 'mas-combativo-2026.png',
-    corredor: 'corredor-fecha-2026.png'
+    general: 'lider-general.jpg',
+    montana: 'lider-montana.jpg',
+    volantes: 'lider-volantes.jpg',
+    combativo: 'mas-combativo.jpg',
+    corredor: 'corredor-fecha.jpg'
   };
 
   const FRAME_CONFIG = {
@@ -209,163 +209,51 @@
     renderChampionFrame(canvas.getContext('2d'), EXPORT_W, EXPORT_H, photo, category, name);
   }
 
-  function exportPng(photo, category, name) {
-    const off = document.createElement('canvas');
-    renderToCanvas(off, photo, category, name);
-    return off.toDataURL('image/png');
+  function photoUrl(category) {
+    return `${IMAGE_BASE}${CATEGORY_FILES[category]}`;
   }
 
-  async function loadManifest() {
-    try {
-      const res = await fetch(`${IMAGE_BASE}manifest.json?t=${Date.now()}`);
-      if (!res.ok) return {};
-      return await res.json();
-    } catch {
-      return {};
-    }
-  }
-
-  function imageUrl(filename, version) {
-    const v = version ? `?v=${encodeURIComponent(version)}` : `?t=${Date.now()}`;
-    return `${IMAGE_BASE}${filename}${v}`;
-  }
-
-  function setStatus(card, message, isError) {
-    const el = card.querySelector('.ws-upload-status');
-    if (!el) return;
-    if (!message) {
-      el.hidden = true;
-      el.textContent = '';
-      return;
-    }
-    el.hidden = false;
-    el.textContent = message;
-    el.classList.toggle('error', !!isError);
-  }
-
-  function showSavedImage(card, src) {
-    const img = card.querySelector('.ws-champion-img');
-    const canvas = card.querySelector('.ws-champion-canvas');
-    img.src = src;
-    img.hidden = false;
-    canvas.hidden = true;
-    const dl = card.querySelector('.ws-download-btn');
-    if (dl) dl.hidden = false;
-  }
-
-  function showPlaceholder(card, category, name) {
-    const img = card.querySelector('.ws-champion-img');
-    const canvas = card.querySelector('.ws-champion-canvas');
-    img.hidden = true;
-    canvas.hidden = false;
-    renderToCanvas(canvas, null, category, name);
-    const dl = card.querySelector('.ws-download-btn');
-    if (dl) dl.hidden = true;
-  }
-
-  async function tryLoadSavedImage(card, category, manifest) {
-    const name = card.dataset.leaderName;
-    const filename = CATEGORY_FILES[category];
-    const entry = manifest[category];
-    const version = entry?.updated;
-    const src = imageUrl(filename, version);
-
+  function loadPhoto(category) {
     return new Promise(resolve => {
-      const probe = new Image();
-      probe.onload = () => {
-        showSavedImage(card, src);
-        resolve(true);
-      };
-      probe.onerror = () => {
-        showPlaceholder(card, category, name);
-        resolve(false);
-      };
-      probe.src = src;
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => resolve(null);
+      img.src = photoUrl(category);
     });
   }
 
-  async function saveToHosting(category, dataUrl, leaderName) {
-    const res = await fetch('/api/wolfseries-upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category, image: dataUrl, leaderName })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'No se pudo guardar la imagen');
-    return data;
-  }
-
-  function bindCard(card) {
-    const category = card.dataset.championCategory;
-    const name = card.dataset.leaderName;
-    const fileInput = card.querySelector('.ws-champion-file');
-    const uploadBtn = card.querySelector('.ws-upload-btn');
+  function bindDownload(card, category) {
     const downloadBtn = card.querySelector('.ws-download-btn');
-    let lastPhoto = null;
-    let lastDataUrl = null;
-
-    uploadBtn.addEventListener('click', () => fileInput.click());
+    if (!downloadBtn) return;
 
     downloadBtn.addEventListener('click', () => {
-      const src = card.querySelector('.ws-champion-img').src;
-      if (src && !card.querySelector('.ws-champion-img').hidden) {
-        const link = document.createElement('a');
-        link.download = CATEGORY_FILES[category];
-        link.href = src;
-        link.click();
-        return;
-      }
-      if (lastDataUrl) {
-        const link = document.createElement('a');
-        link.download = CATEGORY_FILES[category];
-        link.href = lastDataUrl;
-        link.click();
-      }
+      const canvas = card.querySelector('.ws-champion-canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = CATEGORY_FILES[category].replace(/\.jpg$/i, '.png');
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     });
+  }
 
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
+  async function initCard(card) {
+    const category = card.dataset.championCategory;
+    const name = card.dataset.leaderName;
+    const canvas = card.querySelector('.ws-champion-canvas');
+    const downloadBtn = card.querySelector('.ws-download-btn');
 
-      setStatus(card, 'Procesando foto…');
-      uploadBtn.disabled = true;
+    renderToCanvas(canvas, null, category, name);
 
-      const reader = new FileReader();
-      reader.onload = e => {
-        const img = new Image();
-        img.onload = async () => {
-          lastPhoto = img;
-          lastDataUrl = exportPng(img, category, name);
-          showSavedImage(card, lastDataUrl);
+    const photo = await loadPhoto(category);
+    renderToCanvas(canvas, photo, category, name);
 
-          try {
-            setStatus(card, 'Guardando en el sitio…');
-            const result = await saveToHosting(category, lastDataUrl, name);
-            showSavedImage(card, imageUrl(CATEGORY_FILES[category], result.updated));
-            setStatus(card, 'Foto publicada correctamente.');
-          } catch (err) {
-            setStatus(card, 'Vista previa lista. Para publicar en el sitio configura GITHUB_TOKEN en Vercel.', true);
-          } finally {
-            uploadBtn.disabled = false;
-            fileInput.value = '';
-          }
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+    if (downloadBtn) downloadBtn.hidden = !photo;
+    bindDownload(card, category);
   }
 
   async function init() {
     const cards = document.querySelectorAll('.ws-champion-card');
-    cards.forEach(card => {
-      showPlaceholder(card, card.dataset.championCategory, card.dataset.leaderName);
-      bindCard(card);
-    });
-    const manifest = await loadManifest();
-    await Promise.all(Array.from(cards).map(card =>
-      tryLoadSavedImage(card, card.dataset.championCategory, manifest)
-    ));
+    await Promise.all(Array.from(cards).map(initCard));
   }
 
   if (document.readyState === 'loading') {

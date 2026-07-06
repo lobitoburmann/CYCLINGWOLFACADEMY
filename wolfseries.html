@@ -342,7 +342,6 @@
       background: #111;
       box-shadow: 0 8px 32px rgba(0,0,0,0.45);
     }
-    .ws-champion-visual img,
     .ws-champion-visual canvas {
       width: 100%;
       height: 100%;
@@ -370,19 +369,6 @@
       gap: 8px;
       justify-content: center;
     }
-    .ws-upload-btn {
-      padding: 6px 14px;
-      font-size: 11px;
-      font-family: inherit;
-      color: var(--muted);
-      background: transparent;
-      border: 0.5px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .ws-upload-btn:hover:not(:disabled) { color: var(--white); border-color: var(--border-h); }
-    .ws-upload-btn:disabled { opacity: 0.5; cursor: wait; }
     .ws-download-btn {
       padding: 6px 14px;
       font-size: 11px;
@@ -394,13 +380,6 @@
       cursor: pointer;
     }
     .ws-download-btn:hover { opacity: 0.88; }
-    .ws-upload-status {
-      font-size: 11px;
-      color: var(--green);
-      margin-top: 8px;
-      line-height: 1.4;
-    }
-    .ws-upload-status.error { color: #ff8a65; }
 
     .ws-general-leader-layout {
       display: grid;
@@ -482,6 +461,18 @@
     </div>
   </section>
 
+  <!--
+    FOTOS DE CAMPEONES — subida manual al repo
+    Colocar la foto del ciclista (JPG, cualquier proporción) en images/wolfseries/:
+      lider-general.jpg      → Líder General
+      lider-montana.jpg      → Rey de la Montaña
+      lider-volantes.jpg     → Metas Volantes
+      mas-combativo.jpg      → Más Combativo
+      corredor-fecha.jpg     → Corredor de la Fecha
+    Al cambiar de líder: actualizar data-leader-name en la tarjeta y reemplazar el JPG.
+    Si el archivo no existe, se muestra placeholder con marco y nombre del líder.
+  -->
+
   <!-- 2. CLASIFICACIÓN GENERAL -->
   <section class="ws-section" id="clasificacion">
     <div class="ws-section-inner wide">
@@ -494,18 +485,14 @@
           <p class="ws-leader-showcase-label">Líder de la general</p>
           <article class="ws-champion-card ws-champion-card--hero" data-champion-category="general" data-leader-name="Matías Medel">
             <div class="ws-champion-visual">
-              <img class="ws-champion-img" alt="Matías Medel — Líder General 2026" hidden>
               <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
             </div>
             <div class="ws-champion-meta">
               <p class="ws-champion-role">Líder General 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-upload-btn">Subir foto</button>
                 <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
               </div>
-              <input type="file" class="ws-champion-file" accept="image/*" hidden>
-              <p class="ws-upload-status" hidden></p>
             </div>
           </article>
         </div>
@@ -592,18 +579,14 @@
         <div class="ws-secondary-leader">
           <article class="ws-champion-card" data-champion-category="montana" data-leader-name="Matías Medel">
             <div class="ws-champion-visual">
-              <img class="ws-champion-img" alt="Matías Medel — Rey de la Montaña 2026" hidden>
               <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
             </div>
             <div class="ws-champion-meta">
               <p class="ws-champion-role">Rey de la Montaña 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-upload-btn">Subir foto</button>
                 <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
               </div>
-              <input type="file" class="ws-champion-file" accept="image/*" hidden>
-              <p class="ws-upload-status" hidden></p>
             </div>
           </article>
         </div>
@@ -630,18 +613,14 @@
         <div class="ws-secondary-leader">
           <article class="ws-champion-card" data-champion-category="volantes" data-leader-name="Matías Medel">
             <div class="ws-champion-visual">
-              <img class="ws-champion-img" alt="Matías Medel — Campeón Metas Volantes 2026" hidden>
               <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
             </div>
             <div class="ws-champion-meta">
               <p class="ws-champion-role">Campeón Metas Volantes 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-upload-btn">Subir foto</button>
                 <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
               </div>
-              <input type="file" class="ws-champion-file" accept="image/*" hidden>
-              <p class="ws-upload-status" hidden></p>
             </div>
           </article>
         </div>
@@ -664,18 +643,14 @@
         <div class="ws-secondary-leader">
           <article class="ws-champion-card" data-champion-category="combativo" data-leader-name="Sergio Vargas">
             <div class="ws-champion-visual">
-              <img class="ws-champion-img" alt="Sergio Vargas — Más Combativo" hidden>
               <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
             </div>
             <div class="ws-champion-meta">
               <p class="ws-champion-role">Más Combativo · Fecha 2</p>
               <p class="ws-champion-name">Sergio Vargas</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-upload-btn">Subir foto</button>
                 <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
               </div>
-              <input type="file" class="ws-champion-file" accept="image/*" hidden>
-              <p class="ws-upload-status" hidden></p>
             </div>
           </article>
         </div>
@@ -692,18 +667,14 @@
         <div class="ws-secondary-leader">
           <article class="ws-champion-card" data-champion-category="corredor" data-leader-name="Pato Otarola">
             <div class="ws-champion-visual">
-              <img class="ws-champion-img" alt="Pato Otarola — Corredor de la Fecha" hidden>
               <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
             </div>
             <div class="ws-champion-meta">
               <p class="ws-champion-role">Corredor de la Fecha · Fecha 2</p>
               <p class="ws-champion-name">Pato Otarola</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-upload-btn">Subir foto</button>
                 <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
               </div>
-              <input type="file" class="ws-champion-file" accept="image/*" hidden>
-              <p class="ws-upload-status" hidden></p>
             </div>
           </article>
         </div>
