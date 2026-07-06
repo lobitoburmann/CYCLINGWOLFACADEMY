@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyclingWolf Series 2026 — Cycling Wolf Academy</title>
+  <meta name="description" content="Temporada de rutas donde la manada compite, se motiva y disfruta. Clasificación, calendario y reglas de la CyclingWolf Series 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .ws-hero {
+      padding: 64px 32px 56px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border);
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212,43,43,0.18), transparent 60%);
+    }
+    .ws-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--red);
+      background: var(--red-dim);
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .ws-hero-title {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 720px;
+      margin: 0 auto 16px;
+    }
+    .ws-hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.75;
+    }
+    .ws-hero-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .ws-meta-pill {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    .ws-meta-pill strong { color: var(--white); font-weight: 500; }
+
+    .ws-section { padding: 48px 32px; border-bottom: 0.5px solid var(--border); }
+    .ws-section-inner { max-width: 960px; margin: 0 auto; }
+    .ws-section-inner.wide { max-width: 1100px; }
+
+    /* Podio top 3 */
+    .ws-podium {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+      align-items: end;
+    }
+    .ws-podium-card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .ws-podium-card.first {
+      padding: 28px 16px 24px;
+      border-color: rgba(255, 215, 0, 0.35);
+      background: linear-gradient(180deg, rgba(255,215,0,0.08) 0%, var(--card) 100%);
+    }
+    .ws-podium-card.second { border-color: rgba(192,192,192,0.3); }
+    .ws-podium-card.third { border-color: rgba(205,127,50,0.35); }
+    .ws-podium-medal { font-size: 28px; line-height: 1; margin-bottom: 8px; }
+    .ws-podium-pos { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--subtle); margin-bottom: 4px; }
+    .ws-podium-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .ws-podium-pts { font-size: 22px; font-weight: 700; color: var(--green); }
+    .ws-podium-pts span { font-size: 12px; font-weight: 500; color: var(--muted); }
+    .ws-leader-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--red);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
+    /* Tabla clasificación */
+    .ws-table-wrap {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .ws-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .ws-table thead th {
+      text-align: left;
+      padding: 12px 18px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--subtle);
+      background: var(--card2);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .ws-table thead th:last-child { text-align: right; }
+    .ws-table tbody tr { border-bottom: 0.5px solid var(--border); transition: background 0.12s; }
+    .ws-table tbody tr:last-child { border-bottom: none; }
+    .ws-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .ws-table tbody tr.podium-row-gold { background: rgba(255,215,0,0.04); }
+    .ws-table tbody tr.podium-row-silver { background: rgba(192,192,192,0.03); }
+    .ws-table tbody tr.podium-row-bronze { background: rgba(205,127,50,0.04); }
+    .ws-table td { padding: 11px 18px; color: var(--white); }
+    .ws-table td.pos { color: var(--muted); font-weight: 600; width: 48px; font-size: 13px; }
+    .ws-table td.pts { text-align: right; font-weight: 600; color: var(--green); }
+
+    /* Tabs secundarias */
+    .ws-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: var(--card2);
+      padding: 4px;
+      border-radius: 10px;
+      border: 0.5px solid var(--border);
+    }
+    .ws-tab {
+      flex: 1;
+      min-width: 120px;
+      font-size: 12px;
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .ws-tab:hover { color: var(--white); }
+    .ws-tab.active { background: var(--card); color: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    .ws-tab-panel { display: none; }
+    .ws-tab-panel.active { display: block; }
+    .ws-mini-table { font-size: 13px; }
+    .ws-mini-table td { padding: 9px 16px; }
+    .ws-history-list { list-style: none; }
+    .ws-history-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 13px;
+    }
+    .ws-history-list li:last-child { border-bottom: none; }
+    .ws-history-date { color: var(--muted); font-size: 12px; }
+    .ws-history-name { font-weight: 500; color: var(--white); }
+
+    /* Calendario */
+    .ws-calendar { display: flex; flex-direction: column; gap: 8px; }
+    .ws-cal-row {
+      display: grid;
+      grid-template-columns: 44px 72px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      transition: border-color 0.15s;
+    }
+    .ws-cal-row.done { opacity: 0.75; }
+    .ws-cal-row.next {
+      border-color: rgba(46,189,107,0.45);
+      background: linear-gradient(90deg, rgba(46,189,107,0.06) 0%, var(--card) 40%);
+    }
+    .ws-cal-row.final {
+      border-color: rgba(255,215,0,0.3);
+      background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--card) 50%);
+    }
+    .ws-cal-num { font-size: 13px; font-weight: 700; color: var(--red); }
+    .ws-cal-date { font-size: 12px; color: var(--muted); }
+    .ws-cal-route { font-size: 13px; color: var(--white); line-height: 1.4; }
+    .ws-cal-status { font-size: 18px; flex-shrink: 0; }
+    .ws-next-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* Puntos */
+    .ws-points-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .ws-point-card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .ws-point-label { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+    .ws-point-vals { font-size: 12px; color: var(--green); font-weight: 600; }
+    .ws-point-note {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      padding: 16px 18px;
+      background: var(--card2);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      border-left: 3px solid var(--red);
+    }
+
+    /* Cards títulos */
+    .ws-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .ws-title-card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 20px;
+      transition: border-color 0.15s;
+    }
+    .ws-title-card:hover { border-color: var(--border-h); }
+    .ws-title-card.featured { border-color: rgba(255,215,0,0.25); }
+    .ws-title-icon { font-size: 28px; margin-bottom: 12px; }
+    .ws-title-name { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .ws-title-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+    /* Espíritu */
+    .ws-spirit {
+      padding: 52px 32px;
+      border-bottom: 0.5px solid var(--border);
+      text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(212,43,43,0.1), transparent 70%);
+    }
+    .ws-spirit-text {
+      font-size: clamp(17px, 3vw, 22px);
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.65;
+      max-width: 720px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+    .ws-spirit-text em { color: var(--green); font-style: normal; }
+
+    /* Reglas colapsables */
+    .ws-rules { padding: 32px 32px 48px; }
+    .ws-rules-inner { max-width: 720px; margin: 0 auto; }
+    .ws-rules-toggle {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .ws-rules-toggle:hover { border-color: var(--border-h); color: var(--white); }
+    .ws-rules-toggle i { transition: transform 0.2s; font-size: 16px; }
+    .ws-rules-toggle.open i { transform: rotate(180deg); }
+    .ws-rules-body {
+      display: none;
+      margin-top: 12px;
+      padding: 20px 22px;
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .ws-rules-body.open { display: block; }
+    .ws-rules-body h4 { color: var(--white); font-size: 13px; font-weight: 600; margin: 16px 0 6px; }
+    .ws-rules-body h4:first-child { margin-top: 0; }
+    .ws-rules-body ul { padding-left: 18px; margin-bottom: 8px; }
+    .ws-rules-body li { margin-bottom: 4px; }
+
+    .nav-logo { text-decoration: none; color: inherit; }
+
+    @media (max-width: 768px) {
+      .ws-hero { padding: 48px 20px 40px; }
+      .ws-section { padding: 36px 20px; }
+      .ws-podium { grid-template-columns: 1fr; }
+      .ws-podium-card.first { order: -1; }
+      .ws-cal-row { grid-template-columns: 36px 64px 1fr auto; padding: 12px 14px; gap: 8px; }
+      .ws-tabs { flex-direction: column; }
+      .ws-tab { min-width: unset; }
+      .ws-spirit { padding: 36px 20px; }
+      .ws-rules { padding: 24px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <div class="wolf-icon"><i class="ti ti-bolt"></i></div>
+      <div>
+        <div class="nav-brand">Cycling Wolf Academy</div>
+        <div class="nav-sub">La academia del ciclismo</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#escuelas">Escuelas</a>
+      <a href="index.html#capsulas">Cursos</a>
+      <a href="wolfseries.html" style="color:var(--white);">Wolf Series</a>
+      <a href="index.html#nosotros">Nosotros</a>
+      <a href="index.html#membresias" class="btn-red">Inscribirse</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><i class="ti ti-menu-2"></i></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#escuelas" onclick="toggleMenu()">Escuelas</a>
+    <a href="index.html#capsulas" onclick="toggleMenu()">Cursos</a>
+    <a href="wolfseries.html" onclick="toggleMenu()">Wolf Series</a>
+    <a href="index.html#nosotros" onclick="toggleMenu()">Nosotros</a>
+    <a href="index.html#membresias" class="btn-red" onclick="toggleMenu()">Inscribirse</a>
+  </div>
+
+  <!-- 1. HERO -->
+  <section class="ws-hero">
+    <div class="ws-hero-badge"><i class="ti ti-trophy"></i> Temporada 2026</div>
+    <h1 class="ws-hero-title">🐺 CyclingWolf Series 2026</h1>
+    <p class="ws-hero-sub">Una temporada de rutas donde la manada compite, se motiva y disfruta.<br>11 fechas · Junio a Diciembre · Gran Final en Farellones.</p>
+    <div class="ws-hero-meta">
+      <span class="ws-meta-pill"><strong>11</strong> fechas</span>
+      <span class="ws-meta-pill"><strong>Jun – Dic</strong> 2026</span>
+      <span class="ws-meta-pill"><strong>Gran Final</strong> Farellones 🏆</span>
+    </div>
+  </section>
+
+  <!-- 2. CLASIFICACIÓN GENERAL -->
+  <section class="ws-section" id="clasificacion">
+    <div class="ws-section-inner wide">
+      <div class="section-label">Después de fecha 2</div>
+      <div class="section-title" style="font-size:28px;margin-bottom:8px;">Clasificación General</div>
+      <p class="section-desc" style="margin-bottom:28px;">La tabla más importante de la temporada. Cada punto cuenta.</p>
+
+      <div class="ws-podium">
+        <div class="ws-podium-card second">
+          <div class="ws-podium-medal">🥈</div>
+          <div class="ws-podium-pos">2° lugar</div>
+          <div class="ws-podium-name">Miguel Iturrieta</div>
+          <div class="ws-podium-pts">29 <span>pts</span></div>
+        </div>
+        <div class="ws-podium-card first">
+          <span class="ws-leader-badge">Líder</span>
+          <div class="ws-podium-medal">🥇</div>
+          <div class="ws-podium-pos">1° lugar</div>
+          <div class="ws-podium-name">Matías Medel</div>
+          <div class="ws-podium-pts">53 <span>pts</span></div>
+        </div>
+        <div class="ws-podium-card third">
+          <div class="ws-podium-medal">🥉</div>
+          <div class="ws-podium-pos">3° lugar</div>
+          <div class="ws-podium-name">Pato Otarola</div>
+          <div class="ws-podium-pts">26 <span>pts</span></div>
+        </div>
+      </div>
+
+      <div class="ws-table-wrap">
+        <table class="ws-table">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Corredor</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="podium-row-gold"><td class="pos">1</td><td>Matías Medel</td><td class="pts">53</td></tr>
+            <tr class="podium-row-silver"><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">29</td></tr>
+            <tr class="podium-row-bronze"><td class="pos">3</td><td>Pato Otarola</td><td class="pts">26</td></tr>
+            <tr><td class="pos">4</td><td>Esteban Troncoso</td><td class="pts">16</td></tr>
+            <tr><td class="pos">5</td><td>Pablo Bravo</td><td class="pts">13</td></tr>
+            <tr><td class="pos">6</td><td>Alfonso Cano</td><td class="pts">9</td></tr>
+            <tr><td class="pos">6</td><td>Sergio Vargas</td><td class="pts">9</td></tr>
+            <tr><td class="pos">8</td><td>Álvaro Núñez</td><td class="pts">7</td></tr>
+            <tr><td class="pos">8</td><td>Nico Piddo</td><td class="pts">7</td></tr>
+            <tr><td class="pos">10</td><td>Juan Villagrán</td><td class="pts">6</td></tr>
+            <tr><td class="pos">10</td><td>Rodrigo Pérez</td><td class="pts">6</td></tr>
+            <tr><td class="pos">10</td><td>Juan Monsalve</td><td class="pts">6</td></tr>
+            <tr><td class="pos">13</td><td>Carla Manetti</td><td class="pts">4</td></tr>
+            <tr><td class="pos">14</td><td>Manuel Carvallo</td><td class="pts">2</td></tr>
+            <tr><td class="pos">14</td><td>Claudio Soto</td><td class="pts">2</td></tr>
+            <tr><td class="pos">16</td><td>Claudia Vargas</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Gustavo Alcalde</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Pelao Pérez</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Iturrate</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Hugo Abarzúa</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Diego Junquera</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Rodrigo Grass</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Domingo Errázuriz</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Berham</td><td class="pts">1</td></tr>
+            <tr><td class="pos">16</td><td>Rodrigo Benítez</td><td class="pts">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CLASIFICACIONES SECUNDARIAS -->
+  <section class="ws-section">
+    <div class="ws-section-inner wide">
+      <div class="section-label">Por categoría</div>
+      <div class="section-title" style="margin-bottom:20px;">Clasificaciones Secundarias</div>
+
+      <div class="ws-tabs" role="tablist">
+        <button class="ws-tab active" role="tab" aria-selected="true" data-tab="montana">⛰️ Montaña</button>
+        <button class="ws-tab" role="tab" aria-selected="false" data-tab="volantes">⚡ Metas volantes</button>
+        <button class="ws-tab" role="tab" aria-selected="false" data-tab="combativo">🔥 Más combativo</button>
+        <button class="ws-tab" role="tab" aria-selected="false" data-tab="corredor">⭐ Corredor de la fecha</button>
+      </div>
+
+      <div class="ws-tab-panel active" id="tab-montana">
+        <div class="ws-table-wrap">
+          <table class="ws-table ws-mini-table">
+            <thead><tr><th>Pos</th><th>Corredor</th><th>Puntos</th></tr></thead>
+            <tbody>
+              <tr><td class="pos">1</td><td>Matías Medel</td><td class="pts">41</td></tr>
+              <tr><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">20</td></tr>
+              <tr><td class="pos">3</td><td>Pato Otarola</td><td class="pts">18</td></tr>
+              <tr><td class="pos">4</td><td>Esteban Troncoso</td><td class="pts">14</td></tr>
+              <tr><td class="pos">5</td><td>Pablo Bravo</td><td class="pts">12</td></tr>
+              <tr><td class="pos">6</td><td>Alfonso Cano</td><td class="pts">4</td></tr>
+              <tr><td class="pos">6</td><td>Nico Piddo</td><td class="pts">4</td></tr>
+              <tr><td class="pos">6</td><td>Rodrigo Pérez</td><td class="pts">4</td></tr>
+              <tr><td class="pos">6</td><td>Juan Monsalve</td><td class="pts">4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="ws-tab-panel" id="tab-volantes">
+        <div class="ws-table-wrap">
+          <table class="ws-table ws-mini-table">
+            <thead><tr><th>Pos</th><th>Corredor</th><th>Puntos</th></tr></thead>
+            <tbody>
+              <tr><td class="pos">1</td><td>Matías Medel</td><td class="pts">10</td></tr>
+              <tr><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">8</td></tr>
+              <tr><td class="pos">3</td><td>Álvaro Núñez</td><td class="pts">6</td></tr>
+              <tr><td class="pos">4</td><td>Alfonso Cano</td><td class="pts">4</td></tr>
+              <tr><td class="pos">5</td><td>Nico Piddo</td><td class="pts">2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="ws-tab-panel" id="tab-combativo">
+        <div class="ws-table-wrap">
+          <ul class="ws-history-list">
+            <li><span class="ws-history-date">Fecha 1</span><span class="ws-history-name">Pato Otarola</span></li>
+            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Sergio Vargas</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ws-tab-panel" id="tab-corredor">
+        <div class="ws-table-wrap">
+          <ul class="ws-history-list">
+            <li><span class="ws-history-date">Fecha 1</span><span class="ws-history-name">Carla Manetti</span></li>
+            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Pato Otarola</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CALENDARIO -->
+  <section class="ws-section" id="calendario">
+    <div class="ws-section-inner wide">
+      <div class="section-label">2026</div>
+      <div class="section-title" style="margin-bottom:24px;">Calendario</div>
+
+      <div class="ws-calendar">
+        <div class="ws-cal-row done">
+          <span class="ws-cal-num">01</span>
+          <span class="ws-cal-date">27 jun</span>
+          <span class="ws-cal-route">Chicureo → La Dormida</span>
+          <span class="ws-cal-status" title="Completada">✅</span>
+        </div>
+        <div class="ws-cal-row done">
+          <span class="ws-cal-num">02</span>
+          <span class="ws-cal-date">04 jul</span>
+          <span class="ws-cal-route">Cuesta Chacabuco</span>
+          <span class="ws-cal-status" title="Completada">✅</span>
+        </div>
+        <div class="ws-cal-row next">
+          <span class="ws-cal-num">03</span>
+          <span class="ws-cal-date">25 jul</span>
+          <span class="ws-cal-route">Chicureo → Chicauma → Quilapilún <span class="ws-next-label">Próxima</span></span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">04</span>
+          <span class="ws-cal-date">08 ago</span>
+          <span class="ws-cal-route">Las Vizcachas → Las Melosas</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">05</span>
+          <span class="ws-cal-date">29 ago</span>
+          <span class="ws-cal-route">La Dehesa → Mon. Manuel Rodríguez → La Dehesa</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">06</span>
+          <span class="ws-cal-date">12 sep</span>
+          <span class="ws-cal-route">Chacabuco → Las Bateas</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">07</span>
+          <span class="ws-cal-date">26 sep</span>
+          <span class="ws-cal-route">Vizcachas → Las Melosas</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">08</span>
+          <span class="ws-cal-date">10 oct</span>
+          <span class="ws-cal-route">4 Cuestas Lo Prado / Lo Prado</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">09</span>
+          <span class="ws-cal-date">24 oct</span>
+          <span class="ws-cal-route">Chicureo → Chicauma → Quilapilún</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row">
+          <span class="ws-cal-num">10</span>
+          <span class="ws-cal-date">14 nov</span>
+          <span class="ws-cal-route">Chicureo → La Dormida → Chicureo</span>
+          <span class="ws-cal-status"></span>
+        </div>
+        <div class="ws-cal-row final">
+          <span class="ws-cal-num">11</span>
+          <span class="ws-cal-date">05 dic</span>
+          <span class="ws-cal-route">Farellones · Gran Final 🏆</span>
+          <span class="ws-cal-status"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SISTEMA DE PUNTOS -->
+  <section class="ws-section">
+    <div class="ws-section-inner">
+      <div class="section-label">Cómo se suman</div>
+      <div class="section-title" style="margin-bottom:20px;">Sistema de Puntos</div>
+
+      <div class="ws-points-grid">
+        <div class="ws-point-card">
+          <div class="ws-point-label">⛰️ Metas de montaña</div>
+          <div class="ws-point-vals">10 · 8 · 6 · 4 · 2 pts (top 5)</div>
+        </div>
+        <div class="ws-point-card">
+          <div class="ws-point-label">⚡ Metas volantes</div>
+          <div class="ws-point-vals">10 · 8 · 6 · 4 · 2 pts (top 5)</div>
+        </div>
+        <div class="ws-point-card">
+          <div class="ws-point-label">🔥 Más combativo</div>
+          <div class="ws-point-vals">3 pts</div>
+        </div>
+        <div class="ws-point-card">
+          <div class="ws-point-label">⭐ Corredor de la fecha</div>
+          <div class="ws-point-vals">3 pts</div>
+        </div>
+        <div class="ws-point-card">
+          <div class="ws-point-label">✅ Asistencia</div>
+          <div class="ws-point-vals">1 pt</div>
+        </div>
+      </div>
+
+      <p class="ws-point-note">
+        <strong style="color:var(--white);">Nota:</strong> Ocasionalmente pueden existir puntuaciones especiales (Strava, segmentos particulares) que serán informadas previamente.
+      </p>
+    </div>
+  </section>
+
+  <!-- 6. TÍTULOS EN JUEGO -->
+  <section class="ws-section">
+    <div class="ws-section-inner wide">
+      <div class="section-label">Al cierre de temporada</div>
+      <div class="section-title" style="margin-bottom:20px;">Títulos en Juego</div>
+
+      <div class="ws-cards-grid">
+        <div class="ws-title-card featured">
+          <div class="ws-title-icon">🏆</div>
+          <div class="ws-title-name">Clasificación General</div>
+          <div class="ws-title-desc">El campeón absoluto de la temporada</div>
+        </div>
+        <div class="ws-title-card">
+          <div class="ws-title-icon">⛰️</div>
+          <div class="ws-title-name">Campeón de la Montaña</div>
+          <div class="ws-title-desc">El mejor escalador de la temporada</div>
+        </div>
+        <div class="ws-title-card">
+          <div class="ws-title-icon">⚡</div>
+          <div class="ws-title-name">Campeón Metas Volantes</div>
+          <div class="ws-title-desc">El ciclista más rápido de la temporada</div>
+        </div>
+        <div class="ws-title-card">
+          <div class="ws-title-icon">🎯</div>
+          <div class="ws-title-name">Premio a la Asistencia</div>
+          <div class="ws-title-desc">Compromiso durante la temporada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. RECONOCIMIENTOS -->
+  <section class="ws-section">
+    <div class="ws-section-inner">
+      <div class="section-label">Reconocimientos especiales</div>
+      <div class="section-title" style="margin-bottom:20px;">Reconocimientos del Año</div>
+
+      <div class="ws-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="ws-title-card">
+          <div class="ws-title-icon">🔥</div>
+          <div class="ws-title-name">Más Combativo del Año</div>
+          <div class="ws-title-desc">Corazón que nunca se rinde</div>
+        </div>
+        <div class="ws-title-card">
+          <div class="ws-title-icon">🐺</div>
+          <div class="ws-title-name">Espíritu CyclingWolf</div>
+          <div class="ws-title-desc">Juntos somos más grandes — reconocimiento al ciclista que mejor represente los valores de la manada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ESPÍRITU -->
+  <section class="ws-spirit">
+    <div class="section-label" style="margin-bottom:16px;">Nuestra filosofía</div>
+    <p class="ws-spirit-text">
+      El objetivo <em>NO</em> es transformar nuestras salidas en carreras. Es agregar momentos específicos de competencia donde podamos medir nuestro progreso, motivarnos y disfrutar cada día más. Somos una manada. Competimos. Nos motivamos. Disfrutamos.
+    </p>
+  </section>
+
+  <!-- 9. REGLAS -->
+  <section class="ws-rules">
+    <div class="ws-rules-inner">
+      <button class="ws-rules-toggle" id="rulesToggle" aria-expanded="false">
+        <span>Las reglas</span>
+        <i class="ti ti-chevron-down"></i>
+      </button>
+      <div class="ws-rules-body" id="rulesBody">
+        <h4>Participación</h4>
+        <ul>
+          <li>La Series está abierta a miembros de la manada CyclingWolf que participen en las salidas oficiales.</li>
+          <li>La asistencia a cada fecha otorga 1 punto automáticamente.</li>
+          <li>Es responsabilidad de cada ciclista informar su participación al organizador de la fecha.</li>
+        </ul>
+        <h4>Metas y puntuación</h4>
+        <ul>
+          <li>Metas de montaña y metas volantes: puntúan los 5 primeros en cada meta (10, 8, 6, 4, 2 pts).</li>
+          <li>El premio "Más combativo" y "Corredor de la fecha" otorgan 3 pts cada uno, decididos al cierre de cada salida.</li>
+          <li>Los puntos de todas las categorías se suman a la Clasificación General.</li>
+          <li>Puntuaciones especiales (Strava, segmentos) serán comunicadas con anticipación y aplican solo en la fecha indicada.</li>
+        </ul>
+        <h4>Conducta y seguridad</h4>
+        <ul>
+          <li>Se espera respeto mutuo, cumplimiento de las normas de tránsito y señales del grupo.</li>
+          <li>La Series busca motivar, no convertir las salidas en carreras cerradas. El espíritu de manada prima sobre el resultado.</li>
+          <li>El organizador se reserva el derecho de descalificar conductas que pongan en riesgo al grupo o desvirtúen el espíritu de la Series.</li>
+        </ul>
+        <h4>Desempates</h4>
+        <ul>
+          <li>En caso de empate en puntos, gana quien tenga más victorias en metas de montaña. Persistiendo el empate, gana quien tenga más premios de "Corredor de la fecha".</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-copy">© 2026 Cycling Wolf Academy</div>
+    <div class="footer-family">
+      <a href="https://cyclingwolf.com" target="_blank">CyclingWolf</a>
+      <a href="https://wolftours.cl" target="_blank">Wolf Tours</a>
+      <a href="index.html">Wolf Academy</a>
+      <a href="wolfseries.html">Wolf Series</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    document.querySelectorAll('.ws-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.ws-tab').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.ws-tab-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const rulesToggle = document.getElementById('rulesToggle');
+    const rulesBody = document.getElementById('rulesBody');
+    rulesToggle.addEventListener('click', () => {
+      const open = rulesBody.classList.toggle('open');
+      rulesToggle.classList.toggle('open', open);
+      rulesToggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>
