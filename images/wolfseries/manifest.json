@@ -1,0 +1,22 @@
+{
+  "general": {
+    "leader": "Matías Medel",
+    "file": "lider-general-2026.png"
+  },
+  "montana": {
+    "leader": "Matías Medel",
+    "file": "rey-montana-2026.png"
+  },
+  "volantes": {
+    "leader": "Matías Medel",
+    "file": "metas-volantes-2026.png"
+  },
+  "combativo": {
+    "leader": "Sergio Vargas",
+    "file": "mas-combativo-2026.png"
+  },
+  "corredor": {
+    "leader": "Pato Otarola",
+    "file": "corredor-fecha-2026.png"
+  }
+}

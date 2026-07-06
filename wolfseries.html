@@ -328,133 +328,100 @@
 
     .nav-logo { text-decoration: none; color: inherit; }
 
-    /* Vestidor de campeones */
-    .ws-dress-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 10px;
-      padding: 6px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: inherit;
-      color: var(--white);
-      background: rgba(255,215,0,0.12);
-      border: 0.5px solid rgba(255,215,0,0.35);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }
-    .ws-dress-btn:hover { background: rgba(255,215,0,0.2); border-color: rgba(255,215,0,0.55); }
-    .ws-dress-btn--sm { margin-top: 0; padding: 4px 10px; font-size: 10px; }
-    .ws-dress-btn--green { background: var(--green-dim); border-color: rgba(46,189,107,0.35); }
-    .ws-dress-btn--green:hover { background: rgba(46,189,107,0.18); border-color: rgba(46,189,107,0.55); }
-    .ws-leader-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .ws-leader-actions { flex-shrink: 0; }
-    .ws-history-list li { flex-wrap: wrap; gap: 8px; }
-
-    .ws-dress-dialog {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-    }
-    .ws-dress-dialog.open { display: flex; }
-    .ws-dress-panel {
+    /* Campeones en página */
+    .ws-champion-card {
       width: 100%;
-      max-width: 520px;
-      max-height: 92vh;
-      overflow-y: auto;
-      background: var(--card);
-      border: 0.5px solid var(--border);
+      max-width: 300px;
+    }
+    .ws-champion-card--hero { max-width: 300px; }
+    .ws-champion-visual {
+      aspect-ratio: 1080 / 1350;
+      width: 100%;
       border-radius: 14px;
-      padding: 24px;
-    }
-    .ws-dress-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
-    .ws-dress-title { font-size: 16px; font-weight: 600; color: var(--white); }
-    .ws-dress-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .ws-dress-close {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 20px;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-    }
-    .ws-dress-close:hover { color: var(--white); }
-    .ws-dress-drop {
-      border: 2px dashed var(--border-h);
-      border-radius: 12px;
-      padding: 28px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      margin-bottom: 16px;
-    }
-    .ws-dress-drop:hover, .ws-dress-drop.dragover {
-      border-color: var(--green);
-      background: var(--green-dim);
-    }
-    .ws-dress-drop-icon { font-size: 28px; margin-bottom: 8px; }
-    .ws-dress-drop-text { font-size: 13px; color: var(--muted); }
-    .ws-dress-drop-text strong { color: var(--white); font-weight: 500; }
-    .ws-dress-preview-wrap {
-      background: #111;
-      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 16px;
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: #111;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45);
     }
-    .ws-dress-preview-wrap canvas { max-width: 100%; max-height: 100%; display: block; }
-    .ws-dress-preview-placeholder { font-size: 12px; color: var(--subtle); padding: 20px; text-align: center; }
-    .ws-dress-actions { display: flex; flex-direction: column; gap: 8px; }
-    .ws-dress-actions .btn-green, .ws-dress-actions .btn-outline { width: 100%; text-align: center; padding: 11px; font-size: 12px; }
-    .ws-dress-actions .btn-green:disabled, .ws-dress-actions .btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .ws-vestidor {
-      background: linear-gradient(180deg, rgba(212,43,43,0.06) 0%, transparent 100%);
-    }
-    .ws-vestidor-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .ws-vestidor-field label {
+    .ws-champion-visual img,
+    .ws-champion-visual canvas {
+      width: 100%;
+      height: 100%;
       display: block;
+      object-fit: contain;
+    }
+    .ws-champion-meta { margin-top: 12px; text-align: center; }
+    .ws-champion-role {
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       color: var(--subtle);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-    .ws-vestidor-field select,
-    .ws-vestidor-field input {
-      width: 100%;
-      padding: 10px 12px;
-      background: var(--card2);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
+    .ws-champion-name {
+      font-size: 18px;
+      font-weight: 700;
       color: var(--white);
-      font-size: 13px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .ws-champion-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .ws-upload-btn {
+      padding: 6px 14px;
+      font-size: 11px;
       font-family: inherit;
+      color: var(--muted);
+      background: transparent;
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
     }
-    .ws-vestidor-field select:focus,
-    .ws-vestidor-field input:focus {
-      outline: none;
-      border-color: var(--border-h);
+    .ws-upload-btn:hover:not(:disabled) { color: var(--white); border-color: var(--border-h); }
+    .ws-upload-btn:disabled { opacity: 0.5; cursor: wait; }
+    .ws-download-btn {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: inherit;
+      color: var(--green);
+      background: var(--green-dim);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .ws-vestidor-field.full { grid-column: 1 / -1; }
+    .ws-download-btn:hover { opacity: 0.88; }
+    .ws-upload-status {
+      font-size: 11px;
+      color: var(--green);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .ws-upload-status.error { color: #ff8a65; }
+
+    .ws-general-leader-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 300px) 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+    .ws-secondary-leader {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .ws-leader-showcase-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--subtle);
+      text-align: center;
+      margin-bottom: 12px;
+    }
 
     @media (max-width: 768px) {
       .ws-hero { padding: 48px 20px 40px; }
@@ -466,7 +433,8 @@
       .ws-tab { min-width: unset; }
       .ws-spirit { padding: 36px 20px; }
       .ws-rules { padding: 24px 20px 40px; }
-      .ws-vestidor-form { grid-template-columns: 1fr; }
+      .ws-general-leader-layout { grid-template-columns: 1fr; }
+      .ws-champion-card, .ws-champion-card--hero { max-width: none; }
     }
   </style>
 </head>
@@ -521,6 +489,27 @@
       <div class="section-title" style="font-size:28px;margin-bottom:8px;">Clasificación General</div>
       <p class="section-desc" style="margin-bottom:28px;">La tabla más importante de la temporada. Cada punto cuenta.</p>
 
+      <div class="ws-general-leader-layout">
+        <div>
+          <p class="ws-leader-showcase-label">Líder de la general</p>
+          <article class="ws-champion-card ws-champion-card--hero" data-champion-category="general" data-leader-name="Matías Medel">
+            <div class="ws-champion-visual">
+              <img class="ws-champion-img" alt="Matías Medel — Líder General 2026" hidden>
+              <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
+            </div>
+            <div class="ws-champion-meta">
+              <p class="ws-champion-role">Líder General 2026</p>
+              <p class="ws-champion-name">Matías Medel</p>
+              <div class="ws-champion-tools">
+                <button type="button" class="ws-upload-btn">Subir foto</button>
+                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+              </div>
+              <input type="file" class="ws-champion-file" accept="image/*" hidden>
+              <p class="ws-upload-status" hidden></p>
+            </div>
+          </article>
+        </div>
+
       <div class="ws-podium">
         <div class="ws-podium-card second">
           <div class="ws-podium-medal">🥈</div>
@@ -534,7 +523,6 @@
           <div class="ws-podium-pos">1° lugar</div>
           <div class="ws-podium-name">Matías Medel</div>
           <div class="ws-podium-pts">53 <span>pts</span></div>
-          <button type="button" class="ws-dress-btn" data-dress-category="general" data-dress-name="Matías Medel">🏆 Vestir al campeón</button>
         </div>
         <div class="ws-podium-card third">
           <div class="ws-podium-medal">🥉</div>
@@ -542,6 +530,7 @@
           <div class="ws-podium-name">Pato Otarola</div>
           <div class="ws-podium-pts">26 <span>pts</span></div>
         </div>
+      </div>
       </div>
 
       <div class="ws-table-wrap">
@@ -554,7 +543,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="podium-row-gold"><td class="pos">1</td><td class="ws-leader-row"><span>Matías Medel</span><span class="ws-leader-actions"><button type="button" class="ws-dress-btn ws-dress-btn--sm" data-dress-category="general" data-dress-name="Matías Medel">🏆 Vestir</button></span></td><td class="pts">53</td></tr>
+            <tr class="podium-row-gold"><td class="pos">1</td><td>Matías Medel</td><td class="pts">53</td></tr>
             <tr class="podium-row-silver"><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">29</td></tr>
             <tr class="podium-row-bronze"><td class="pos">3</td><td>Pato Otarola</td><td class="pts">26</td></tr>
             <tr><td class="pos">4</td><td>Esteban Troncoso</td><td class="pts">16</td></tr>
@@ -599,11 +588,30 @@
       </div>
 
       <div class="ws-tab-panel active" id="tab-montana">
+        <p class="ws-leader-showcase-label">Líder de montaña</p>
+        <div class="ws-secondary-leader">
+          <article class="ws-champion-card" data-champion-category="montana" data-leader-name="Matías Medel">
+            <div class="ws-champion-visual">
+              <img class="ws-champion-img" alt="Matías Medel — Rey de la Montaña 2026" hidden>
+              <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
+            </div>
+            <div class="ws-champion-meta">
+              <p class="ws-champion-role">Rey de la Montaña 2026</p>
+              <p class="ws-champion-name">Matías Medel</p>
+              <div class="ws-champion-tools">
+                <button type="button" class="ws-upload-btn">Subir foto</button>
+                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+              </div>
+              <input type="file" class="ws-champion-file" accept="image/*" hidden>
+              <p class="ws-upload-status" hidden></p>
+            </div>
+          </article>
+        </div>
         <div class="ws-table-wrap">
           <table class="ws-table ws-mini-table">
             <thead><tr><th>Pos</th><th>Corredor</th><th>Puntos</th></tr></thead>
             <tbody>
-              <tr><td class="pos">1</td><td class="ws-leader-row"><span>Matías Medel</span><span class="ws-leader-actions"><button type="button" class="ws-dress-btn ws-dress-btn--sm" data-dress-category="montana" data-dress-name="Matías Medel">🏆 Vestir</button></span></td><td class="pts">41</td></tr>
+              <tr><td class="pos">1</td><td>Matías Medel</td><td class="pts">41</td></tr>
               <tr><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">20</td></tr>
               <tr><td class="pos">3</td><td>Pato Otarola</td><td class="pts">18</td></tr>
               <tr><td class="pos">4</td><td>Esteban Troncoso</td><td class="pts">14</td></tr>
@@ -618,11 +626,30 @@
       </div>
 
       <div class="ws-tab-panel" id="tab-volantes">
+        <p class="ws-leader-showcase-label">Líder metas volantes</p>
+        <div class="ws-secondary-leader">
+          <article class="ws-champion-card" data-champion-category="volantes" data-leader-name="Matías Medel">
+            <div class="ws-champion-visual">
+              <img class="ws-champion-img" alt="Matías Medel — Campeón Metas Volantes 2026" hidden>
+              <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
+            </div>
+            <div class="ws-champion-meta">
+              <p class="ws-champion-role">Campeón Metas Volantes 2026</p>
+              <p class="ws-champion-name">Matías Medel</p>
+              <div class="ws-champion-tools">
+                <button type="button" class="ws-upload-btn">Subir foto</button>
+                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+              </div>
+              <input type="file" class="ws-champion-file" accept="image/*" hidden>
+              <p class="ws-upload-status" hidden></p>
+            </div>
+          </article>
+        </div>
         <div class="ws-table-wrap">
           <table class="ws-table ws-mini-table">
             <thead><tr><th>Pos</th><th>Corredor</th><th>Puntos</th></tr></thead>
             <tbody>
-              <tr><td class="pos">1</td><td class="ws-leader-row"><span>Matías Medel</span><span class="ws-leader-actions"><button type="button" class="ws-dress-btn ws-dress-btn--sm ws-dress-btn--green" data-dress-category="volantes" data-dress-name="Matías Medel">🏆 Vestir</button></span></td><td class="pts">10</td></tr>
+              <tr><td class="pos">1</td><td>Matías Medel</td><td class="pts">10</td></tr>
               <tr><td class="pos">2</td><td>Miguel Iturrieta</td><td class="pts">8</td></tr>
               <tr><td class="pos">3</td><td>Álvaro Núñez</td><td class="pts">6</td></tr>
               <tr><td class="pos">4</td><td>Alfonso Cano</td><td class="pts">4</td></tr>
@@ -633,19 +660,57 @@
       </div>
 
       <div class="ws-tab-panel" id="tab-combativo">
+        <p class="ws-leader-showcase-label">Último más combativo</p>
+        <div class="ws-secondary-leader">
+          <article class="ws-champion-card" data-champion-category="combativo" data-leader-name="Sergio Vargas">
+            <div class="ws-champion-visual">
+              <img class="ws-champion-img" alt="Sergio Vargas — Más Combativo" hidden>
+              <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
+            </div>
+            <div class="ws-champion-meta">
+              <p class="ws-champion-role">Más Combativo · Fecha 2</p>
+              <p class="ws-champion-name">Sergio Vargas</p>
+              <div class="ws-champion-tools">
+                <button type="button" class="ws-upload-btn">Subir foto</button>
+                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+              </div>
+              <input type="file" class="ws-champion-file" accept="image/*" hidden>
+              <p class="ws-upload-status" hidden></p>
+            </div>
+          </article>
+        </div>
         <div class="ws-table-wrap">
           <ul class="ws-history-list">
             <li><span class="ws-history-date">Fecha 1</span><span class="ws-history-name">Pato Otarola</span></li>
-            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Sergio Vargas</span><button type="button" class="ws-dress-btn ws-dress-btn--sm" data-dress-category="combativo" data-dress-name="Sergio Vargas">🏆 Vestir al campeón</button></li>
+            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Sergio Vargas</span></li>
           </ul>
         </div>
       </div>
 
       <div class="ws-tab-panel" id="tab-corredor">
+        <p class="ws-leader-showcase-label">Último corredor de la fecha</p>
+        <div class="ws-secondary-leader">
+          <article class="ws-champion-card" data-champion-category="corredor" data-leader-name="Pato Otarola">
+            <div class="ws-champion-visual">
+              <img class="ws-champion-img" alt="Pato Otarola — Corredor de la Fecha" hidden>
+              <canvas class="ws-champion-canvas" width="1080" height="1350"></canvas>
+            </div>
+            <div class="ws-champion-meta">
+              <p class="ws-champion-role">Corredor de la Fecha · Fecha 2</p>
+              <p class="ws-champion-name">Pato Otarola</p>
+              <div class="ws-champion-tools">
+                <button type="button" class="ws-upload-btn">Subir foto</button>
+                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+              </div>
+              <input type="file" class="ws-champion-file" accept="image/*" hidden>
+              <p class="ws-upload-status" hidden></p>
+            </div>
+          </article>
+        </div>
         <div class="ws-table-wrap">
           <ul class="ws-history-list">
             <li><span class="ws-history-date">Fecha 1</span><span class="ws-history-name">Carla Manetti</span></li>
-            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Pato Otarola</span><button type="button" class="ws-dress-btn ws-dress-btn--sm" data-dress-category="corredor" data-dress-name="Pato Otarola">🏆 Vestir al campeón</button></li>
+            <li><span class="ws-history-date">Fecha 2</span><span class="ws-history-name">Pato Otarola</span></li>
           </ul>
         </div>
       </div>
@@ -824,49 +889,6 @@
     </p>
   </section>
 
-  <!-- VESTIDOR DE CAMPEONES -->
-  <section class="ws-section ws-vestidor" id="vestidor">
-    <div class="ws-section-inner wide">
-      <div class="section-label">Herramienta para coaches</div>
-      <div class="section-title" style="margin-bottom:8px;">Crear imagen de campeón</div>
-      <p class="section-desc" style="margin-bottom:24px;">Elige cualquier clasificación, sube la foto del ciclista y descarga la imagen lista para redes sociales.</p>
-
-      <div class="ws-vestidor-form">
-        <div class="ws-vestidor-field">
-          <label for="vestidorCategory">Clasificación</label>
-          <select id="vestidorCategory">
-            <option value="general">🏆 General — Líder General</option>
-            <option value="montana">⛰️ Montaña — Rey de la Montaña</option>
-            <option value="volantes">⚡ Metas Volantes</option>
-            <option value="combativo">🔥 Más Combativo</option>
-            <option value="corredor">⭐ Corredor de la Fecha</option>
-          </select>
-        </div>
-        <div class="ws-vestidor-field">
-          <label for="vestidorName">Nombre del ciclista</label>
-          <input type="text" id="vestidorName" placeholder="Ej. Matías Medel">
-        </div>
-      </div>
-
-      <div class="ws-dress-drop" id="vestidorDrop" role="button" tabindex="0">
-        <div class="ws-dress-drop-icon">📷</div>
-        <div class="ws-dress-drop-text"><strong>Arrastra una foto</strong> o haz clic para seleccionar</div>
-      </div>
-      <input type="file" id="vestidorFile" accept="image/*" hidden>
-
-      <div class="ws-dress-preview-wrap" id="vestidorPreviewWrap">
-        <div class="ws-dress-preview-placeholder" id="vestidorPlaceholder">La vista previa aparecerá aquí</div>
-        <canvas id="vestidorCanvas" hidden></canvas>
-      </div>
-
-      <div class="ws-dress-actions">
-        <button type="button" class="btn-green" id="vestidorDlSquare" disabled>Descargar imagen (1080×1080)</button>
-        <button type="button" class="btn-outline" id="vestidorDlPortrait" disabled>Descargar imagen (1080×1350)</button>
-        <button type="button" class="btn-outline" id="vestidorDlStory" disabled>Descargar para historia (1080×1920)</button>
-      </div>
-    </div>
-  </section>
-
   <!-- 9. REGLAS -->
   <section class="ws-rules">
     <div class="ws-rules-inner">
@@ -901,36 +923,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Dialog vestidor -->
-  <div class="ws-dress-dialog" id="dressDialog" role="dialog" aria-modal="true" aria-labelledby="dressDialogTitle">
-    <div class="ws-dress-panel">
-      <div class="ws-dress-header">
-        <div>
-          <div class="ws-dress-title" id="dressDialogTitle">🏆 Vestir al campeón</div>
-          <div class="ws-dress-sub" id="dressDialogSub"></div>
-        </div>
-        <button type="button" class="ws-dress-close" id="dressDialogClose" aria-label="Cerrar">&times;</button>
-      </div>
-
-      <div class="ws-dress-drop" id="dressDrop" role="button" tabindex="0">
-        <div class="ws-dress-drop-icon">📷</div>
-        <div class="ws-dress-drop-text"><strong>Arrastra la foto del ciclista</strong> o haz clic para seleccionar</div>
-      </div>
-      <input type="file" id="dressFile" accept="image/*" hidden>
-
-      <div class="ws-dress-preview-wrap" id="dressPreviewWrap">
-        <div class="ws-dress-preview-placeholder" id="dressPlaceholder">Sube una foto para ver la vista previa</div>
-        <canvas id="dressCanvas" hidden></canvas>
-      </div>
-
-      <div class="ws-dress-actions">
-        <button type="button" class="btn-green" id="dressDlSquare" disabled>Descargar imagen (1080×1080)</button>
-        <button type="button" class="btn-outline" id="dressDlPortrait" disabled>Descargar imagen (1080×1350)</button>
-        <button type="button" class="btn-outline" id="dressDlStory" disabled>Descargar para historia (1080×1920)</button>
-      </div>
-    </div>
-  </div>
 
   <footer class="footer">
     <div class="footer-copy">© 2026 Cycling Wolf Academy</div>
@@ -967,360 +959,7 @@
       rulesToggle.classList.toggle('open', open);
       rulesToggle.setAttribute('aria-expanded', open);
     });
-
-    /* ── Vestidor de campeones ── */
-    const FRAME_CONFIG = {
-      general: {
-        border: '#FFD700',
-        borderGlow: 'rgba(255,215,0,0.35)',
-        title: 'Líder General CyclingWolf Series 2026',
-        pattern: 'gold'
-      },
-      montana: {
-        border: '#D42B2B',
-        borderGlow: 'rgba(212,43,43,0.4)',
-        title: 'Rey de la Montaña 2026',
-        pattern: 'polka'
-      },
-      volantes: {
-        border: '#2EBD6B',
-        borderGlow: 'rgba(46,189,107,0.35)',
-        title: 'Campeón Metas Volantes 2026',
-        pattern: 'green'
-      },
-      combativo: {
-        border: '#FF5722',
-        borderGlow: 'rgba(255,87,34,0.45)',
-        title: 'Más Combativo 2026',
-        pattern: 'fire'
-      },
-      corredor: {
-        border: '#C0C0C0',
-        borderGlow: 'rgba(192,192,192,0.35)',
-        title: 'Corredor de la Fecha',
-        pattern: 'silver'
-      }
-    };
-
-    function roundRect(ctx, x, y, w, h, r) {
-      const rad = Math.min(r, w / 2, h / 2);
-      ctx.beginPath();
-      ctx.moveTo(x + rad, y);
-      ctx.lineTo(x + w - rad, y);
-      ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
-      ctx.lineTo(x + w, y + h - rad);
-      ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
-      ctx.lineTo(x + rad, y + h);
-      ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
-      ctx.lineTo(x, y + rad);
-      ctx.quadraticCurveTo(x, y, x + rad, y);
-      ctx.closePath();
-    }
-
-    function drawImageCover(ctx, img, x, y, w, h) {
-      const ir = img.width / img.height;
-      const r = w / h;
-      let sw, sh, sx, sy;
-      if (ir > r) {
-        sh = img.height;
-        sw = sh * r;
-        sx = (img.width - sw) / 2;
-        sy = 0;
-      } else {
-        sw = img.width;
-        sh = sw / r;
-        sx = 0;
-        sy = (img.height - sh) / 2;
-      }
-      ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
-    }
-
-    function wrapText(ctx, text, maxWidth) {
-      const words = text.split(' ');
-      const lines = [];
-      let line = '';
-      words.forEach(word => {
-        const test = line ? line + ' ' + word : word;
-        if (ctx.measureText(test).width > maxWidth && line) {
-          lines.push(line);
-          line = word;
-        } else {
-          line = test;
-        }
-      });
-      if (line) lines.push(line);
-      return lines;
-    }
-
-    function drawPolkaDots(ctx, w, h, border, color) {
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = border * 0.35;
-      const step = border * 1.1;
-      for (let x = step / 2; x < w; x += step) {
-        ctx.beginPath();
-        ctx.arc(x, border / 2, border * 0.22, 0, Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x, h - border / 2, border * 0.22, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      for (let y = step; y < h - step; y += step) {
-        ctx.beginPath();
-        ctx.arc(border / 2, y, border * 0.22, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(w - border / 2, y, border * 0.22, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    function drawFireGlow(ctx, w, h, border, color) {
-      const grad = ctx.createLinearGradient(0, 0, w, h);
-      grad.addColorStop(0, 'rgba(255,87,34,0.5)');
-      grad.addColorStop(0.5, color);
-      grad.addColorStop(1, 'rgba(255,152,0,0.5)');
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = border;
-      roundRect(ctx, border / 2, border / 2, w - border, h - border, border * 0.6);
-      ctx.stroke();
-    }
-
-    function drawCWLogo(ctx, x, y, size) {
-      roundRect(ctx, x, y, size, size, size * 0.22);
-      ctx.fillStyle = '#D42B2B';
-      ctx.fill();
-      ctx.font = `${size * 0.52}px Inter, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('🐺', x + size / 2, y + size / 2 + size * 0.04);
-    }
-
-    function renderChampionFrame(ctx, w, h, photo, category, name) {
-      const cfg = FRAME_CONFIG[category] || FRAME_CONFIG.general;
-      const border = Math.round(Math.min(w, h) * 0.028);
-      const pad = border * 1.2;
-      const photoTop = pad + border;
-      const bottomBar = Math.round(h * 0.22);
-      const photoH = h - photoTop - bottomBar - pad;
-      const photoW = w - pad * 2 - border;
-      const photoX = pad + border / 2;
-      const innerR = border * 0.5;
-
-      ctx.fillStyle = '#0e0e0e';
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.save();
-      roundRect(ctx, photoX, photoTop, photoW, photoH, innerR);
-      ctx.clip();
-      if (photo) {
-        drawImageCover(ctx, photo, photoX, photoTop, photoW, photoH);
-      } else {
-        ctx.fillStyle = '#1c1c1c';
-        ctx.fillRect(photoX, photoTop, photoW, photoH);
-      }
-      const shade = ctx.createLinearGradient(0, photoTop, 0, photoTop + photoH);
-      shade.addColorStop(0, 'rgba(0,0,0,0.55)');
-      shade.addColorStop(0.25, 'rgba(0,0,0,0.05)');
-      shade.addColorStop(0.65, 'rgba(0,0,0,0.1)');
-      shade.addColorStop(1, 'rgba(0,0,0,0.75)');
-      ctx.fillStyle = shade;
-      ctx.fillRect(photoX, photoTop, photoW, photoH);
-      ctx.restore();
-
-      const barY = h - bottomBar - pad;
-      const barGrad = ctx.createLinearGradient(0, barY, 0, h);
-      barGrad.addColorStop(0, '#1c1c1c');
-      barGrad.addColorStop(1, '#0e0e0e');
-      ctx.fillStyle = barGrad;
-      ctx.fillRect(pad, barY, w - pad * 2, bottomBar + pad);
-
-      ctx.strokeStyle = cfg.border;
-      ctx.lineWidth = border;
-      if (cfg.pattern === 'fire') {
-        drawFireGlow(ctx, w, h, border, cfg.border);
-      } else {
-        roundRect(ctx, border / 2, border / 2, w - border, h - border, border * 0.6);
-        ctx.stroke();
-      }
-      if (cfg.pattern === 'polka') drawPolkaDots(ctx, w, h, border, cfg.border);
-      if (cfg.pattern === 'gold') {
-        ctx.strokeStyle = 'rgba(255,215,0,0.25)';
-        ctx.lineWidth = border * 0.4;
-        roundRect(ctx, border * 1.2, border * 1.2, w - border * 2.4, h - border * 2.4, border * 0.5);
-        ctx.stroke();
-      }
-
-      const logoSize = Math.round(w * 0.1);
-      drawCWLogo(ctx, w - logoSize - pad - border, photoTop + pad, logoSize);
-
-      ctx.textAlign = 'left';
-      ctx.fillStyle = cfg.border;
-      ctx.font = `600 ${Math.round(w * 0.028)}px Inter, sans-serif`;
-      const titleSize = Math.round(w * 0.028);
-      ctx.font = `600 ${titleSize}px Inter, sans-serif`;
-      const titleLines = wrapText(ctx, cfg.title, w - pad * 4 - logoSize);
-      titleLines.forEach((line, i) => {
-        ctx.fillText(line, pad + border, photoTop + pad + titleSize + i * (titleSize * 1.35));
-      });
-
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#F2F2F0';
-      const nameSize = Math.round(w * 0.065);
-      ctx.font = `700 ${nameSize}px Inter, sans-serif`;
-      const displayName = name || 'Ciclista';
-      const nameLines = wrapText(ctx, displayName, w - pad * 4);
-      const nameBlockH = nameLines.length * nameSize * 1.15;
-      const nameStartY = barY + (bottomBar - nameBlockH) / 2 + nameSize * 0.85;
-      nameLines.forEach((line, i) => {
-        ctx.fillText(line, w / 2, nameStartY + i * nameSize * 1.15);
-      });
-
-      ctx.font = `500 ${Math.round(w * 0.022)}px Inter, sans-serif`;
-      ctx.fillStyle = 'rgba(242,242,240,0.45)';
-      ctx.fillText('CyclingWolf Series 2026', w / 2, h - pad - border * 0.5);
-    }
-
-    function createDresser(options) {
-      const { canvas, placeholder, drop, fileInput, dlSquare, dlPortrait, dlStory, getCategory, getName } = options;
-      let photo = null;
-
-      function renderPreview() {
-        const category = getCategory();
-        const name = getName();
-        const previewSize = canvas.parentElement.clientWidth || 400;
-        canvas.width = previewSize;
-        canvas.height = previewSize;
-        const ctx = canvas.getContext('2d');
-        renderChampionFrame(ctx, previewSize, previewSize, photo, category, name);
-        placeholder.hidden = true;
-        canvas.hidden = false;
-        dlSquare.disabled = !photo;
-        dlPortrait.disabled = !photo;
-        dlStory.disabled = !photo;
-      }
-
-      function exportFrame(width, height, filename) {
-        const off = document.createElement('canvas');
-        off.width = width;
-        off.height = height;
-        const ctx = off.getContext('2d');
-        renderChampionFrame(ctx, width, height, photo, getCategory(), getName());
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = off.toDataURL('image/png');
-        link.click();
-      }
-
-      function loadFile(file) {
-        if (!file || !file.type.startsWith('image/')) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-          const img = new Image();
-          img.onload = () => { photo = img; renderPreview(); };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-
-      drop.addEventListener('click', () => fileInput.click());
-      drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
-      drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
-      drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
-      drop.addEventListener('drop', e => {
-        e.preventDefault();
-        drop.classList.remove('dragover');
-        loadFile(e.dataTransfer.files[0]);
-      });
-      fileInput.addEventListener('change', () => loadFile(fileInput.files[0]));
-
-      dlSquare.addEventListener('click', () => {
-        const slug = (getName() || 'campeon').replace(/\s+/g, '-').toLowerCase();
-        exportFrame(1080, 1080, `cyclingwolf-${slug}-1080.png`);
-      });
-      dlPortrait.addEventListener('click', () => {
-        const slug = (getName() || 'campeon').replace(/\s+/g, '-').toLowerCase();
-        exportFrame(1080, 1350, `cyclingwolf-${slug}-1350.png`);
-      });
-      dlStory.addEventListener('click', () => {
-        const slug = (getName() || 'campeon').replace(/\s+/g, '-').toLowerCase();
-        exportFrame(1080, 1920, `cyclingwolf-${slug}-historia.png`);
-      });
-
-      return {
-        reset() {
-          photo = null;
-          fileInput.value = '';
-          placeholder.hidden = false;
-          canvas.hidden = true;
-          dlSquare.disabled = true;
-          dlPortrait.disabled = true;
-          dlStory.disabled = true;
-        },
-        refresh() { if (photo) renderPreview(); }
-      };
-    }
-
-    const dressDialog = document.getElementById('dressDialog');
-    let dialogCategory = 'general';
-    let dialogName = '';
-
-    const dialogDresser = createDresser({
-      canvas: document.getElementById('dressCanvas'),
-      placeholder: document.getElementById('dressPlaceholder'),
-      drop: document.getElementById('dressDrop'),
-      fileInput: document.getElementById('dressFile'),
-      dlSquare: document.getElementById('dressDlSquare'),
-      dlPortrait: document.getElementById('dressDlPortrait'),
-      dlStory: document.getElementById('dressDlStory'),
-      getCategory: () => dialogCategory,
-      getName: () => dialogName
-    });
-
-    function openDressDialog(category, name) {
-      dialogCategory = category;
-      dialogName = name;
-      const cfg = FRAME_CONFIG[category];
-      document.getElementById('dressDialogSub').textContent = name + ' · ' + cfg.title;
-      dialogDresser.reset();
-      dressDialog.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeDressDialog() {
-      dressDialog.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('[data-dress-category]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        openDressDialog(btn.dataset.dressCategory, btn.dataset.dressName);
-      });
-    });
-
-    document.getElementById('dressDialogClose').addEventListener('click', closeDressDialog);
-    dressDialog.addEventListener('click', e => { if (e.target === dressDialog) closeDressDialog(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && dressDialog.classList.contains('open')) closeDressDialog(); });
-
-    const vestidorCategory = document.getElementById('vestidorCategory');
-    const vestidorName = document.getElementById('vestidorName');
-
-    const vestidorDresser = createDresser({
-      canvas: document.getElementById('vestidorCanvas'),
-      placeholder: document.getElementById('vestidorPlaceholder'),
-      drop: document.getElementById('vestidorDrop'),
-      fileInput: document.getElementById('vestidorFile'),
-      dlSquare: document.getElementById('vestidorDlSquare'),
-      dlPortrait: document.getElementById('vestidorDlPortrait'),
-      dlStory: document.getElementById('vestidorDlStory'),
-      getCategory: () => vestidorCategory.value,
-      getName: () => vestidorName.value.trim()
-    });
-
-    vestidorCategory.addEventListener('change', () => vestidorDresser.refresh());
-    vestidorName.addEventListener('input', () => vestidorDresser.refresh());
   </script>
+  <script src="js/wolfseries-champions.js"></script>
 </body>
 </html>
