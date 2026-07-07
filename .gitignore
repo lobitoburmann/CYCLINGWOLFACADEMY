@@ -33,3 +33,13 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# static copies generated before build
+/public/index.html
+/public/wolfseries.html
+/public/styles.css
+/public/adaptaciones.html
+/public/curso.html
+/public/nutricion.html
+/public/js
+/public/images
