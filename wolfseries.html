@@ -365,21 +365,54 @@
     }
     .ws-champion-tools {
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+      margin-top: 4px;
+    }
+    .ws-champion-tools-row {
+      display: flex;
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
     }
+    .ws-upload-btn,
     .ws-download-btn {
       padding: 6px 14px;
       font-size: 11px;
       font-family: inherit;
-      color: var(--green);
-      background: var(--green-dim);
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
+    .ws-upload-btn {
+      color: var(--white);
+      background: rgba(255,255,255,0.1);
+    }
+    .ws-upload-btn:hover { background: rgba(255,255,255,0.15); }
+    .ws-download-btn {
+      color: var(--green);
+      background: var(--green-dim);
+    }
     .ws-download-btn:hover { opacity: 0.88; }
+    .ws-name-input,
+    .ws-points-input {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+    }
+    .ws-name-input:focus,
+    .ws-points-input:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.25);
+    }
+    .ws-name-input::placeholder,
+    .ws-points-input::placeholder { color: var(--subtle); }
 
     .ws-general-leader-layout {
       display: grid;
@@ -469,8 +502,8 @@
       lider-volantes.jpg     → Metas Volantes
       mas-combativo.jpg      → Más Combativo
       corredor-fecha.jpg     → Corredor de la Fecha
-    Al cambiar de líder: actualizar data-leader-name en la tarjeta y reemplazar el JPG.
-    Si el archivo no existe, se muestra placeholder con marco y nombre del líder.
+    Al cambiar de líder: subir nueva foto, editar nombre y puntos en los campos de cada tarjeta.
+    Los valores se guardan en el navegador. Descargar imagen 1080×1350 para Instagram.
   -->
 
   <!-- 2. CLASIFICACIÓN GENERAL -->
@@ -491,7 +524,12 @@
               <p class="ws-champion-role">Líder General 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                <div class="ws-champion-tools-row">
+                  <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
+                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                </div>
+                <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
+                <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="53">
               </div>
             </div>
           </article>
@@ -585,7 +623,12 @@
               <p class="ws-champion-role">Rey de la Montaña 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                <div class="ws-champion-tools-row">
+                  <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
+                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                </div>
+                <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
+                <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="41">
               </div>
             </div>
           </article>
@@ -619,7 +662,12 @@
               <p class="ws-champion-role">Campeón Metas Volantes 2026</p>
               <p class="ws-champion-name">Matías Medel</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                <div class="ws-champion-tools-row">
+                  <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
+                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                </div>
+                <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
+                <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="10">
               </div>
             </div>
           </article>
@@ -649,7 +697,12 @@
               <p class="ws-champion-role">Más Combativo · Fecha 2</p>
               <p class="ws-champion-name">Sergio Vargas</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                <div class="ws-champion-tools-row">
+                  <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
+                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                </div>
+                <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Sergio Vargas">
+                <input type="number" class="ws-points-input" placeholder="Puntos" min="0">
               </div>
             </div>
           </article>
@@ -673,7 +726,12 @@
               <p class="ws-champion-role">Corredor de la Fecha · Fecha 2</p>
               <p class="ws-champion-name">Pato Otarola</p>
               <div class="ws-champion-tools">
-                <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                <div class="ws-champion-tools-row">
+                  <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
+                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                </div>
+                <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Pato Otarola">
+                <input type="number" class="ws-points-input" placeholder="Puntos" min="0">
               </div>
             </div>
           </article>
