@@ -209,13 +209,6 @@
   async function resolvePhotoSrc(category, fileName, savedPhotoUrl, fallbackPath) {
     if (savedPhotoUrl) return savedPhotoUrl;
 
-    if (isConfigured()) {
-      var publicUrl = getPublicPhotoUrl(fileName);
-      if (publicUrl) {
-        return publicUrl + '?v=' + Date.now();
-      }
-    }
-
     var localPhoto = getLocal(category, 'photo');
     if (localPhoto) return localPhoto;
 

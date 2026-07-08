@@ -201,12 +201,8 @@ export async function resolvePhotoSrc(
 ): Promise<string> {
   if (savedPhotoUrl) return savedPhotoUrl;
 
-  if (isSupabaseConfigured()) {
-    const remoteUrl = getPublicPhotoUrl(category);
-    if (remoteUrl) {
-      return `${remoteUrl}?v=${Date.now()}`;
-    }
-  }
+  const localPhoto = getLocal(category, "photo");
+  if (localPhoto) return localPhoto;
 
   return fallbackPath;
 }
