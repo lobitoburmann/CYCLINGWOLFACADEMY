@@ -4,7 +4,6 @@
   const EXPORT_W = 1080;
   const EXPORT_H = 1350;
   const IMAGE_BASE = 'images/wolfseries/';
-  const STORAGE_PREFIX = 'ws-champion-';
 
   const CATEGORIES = {
     general: {
@@ -49,9 +48,7 @@
     }
   };
 
-  function storageKey(category, field) {
-    return `${STORAGE_PREFIX}${category}-${field}`;
-  }
+  const storage = window.WolfSeriesStorage;
 
   function roundRect(ctx, x, y, w, h, r) {
     const rad = Math.min(r, w / 2, h / 2);
@@ -279,25 +276,11 @@
   function loadPhoto(src) {
     return new Promise(resolve => {
       const img = new Image();
+      img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
       img.onerror = () => resolve(null);
       img.src = src;
     });
-  }
-
-  function getStored(category, field, fallback) {
-    try {
-      const value = localStorage.getItem(storageKey(category, field));
-      return value != null ? value : fallback;
-    } catch (_) {
-      return fallback;
-    }
-  }
-
-  function setStored(category, field, value) {
-    try {
-      localStorage.setItem(storageKey(category, field), value);
-    } catch (_) {}
   }
 
   function syncMeta(card, name, points) {
@@ -318,20 +301,20 @@
     const nameInput = card.querySelector('.ws-name-input');
     const pointsInput = card.querySelector('.ws-points-input');
 
-    const name = nameInput ? nameInput.value : getStored(category, 'name', cfg.defaultName);
-    const points = pointsInput ? pointsInput.value : getStored(category, 'points', cfg.defaultPoints);
-    const customPhoto = getStored(category, 'photo', '');
+    const name = nameInput ? nameInput.value : cfg.defaultName;
+    const points = pointsInput ? pointsInput.value : cfg.defaultPoints;
 
     renderToCanvas(canvas, null, category, name, points);
 
-    let photo = null;
-    if (customPhoto) {
-      photo = await loadPhoto(customPhoto);
-    }
-    if (!photo) {
-      photo = await loadPhoto(photoUrl(category));
-    }
+    const saved = await storage.loadChampionData(category, cfg.file);
+    const resolvedSrc = await storage.resolvePhotoSrc(
+      category,
+      cfg.file,
+      saved.photoUrl,
+      photoUrl(category)
+    );
 
+    const photo = await loadPhoto(resolvedSrc);
     renderToCanvas(canvas, photo, category, name, points);
     if (downloadBtn) downloadBtn.hidden = false;
     syncMeta(card, name, points);
@@ -345,33 +328,54 @@
     const uploadInput = card.querySelector('.ws-upload-input');
     const downloadBtn = card.querySelector('.ws-download-btn');
 
+    async function hydrateFields() {
+      const saved = await storage.loadChampionData(category, cfg.file);
+      if (nameInput) {
+        nameInput.value = saved.name != null ? saved.name : cfg.defaultName;
+      }
+      if (pointsInput) {
+        pointsInput.value = saved.points != null ? saved.points : cfg.defaultPoints;
+      }
+      await refreshCard(card);
+    }
+
     if (nameInput) {
-      nameInput.value = getStored(category, 'name', cfg.defaultName);
       nameInput.addEventListener('input', () => {
-        setStored(category, 'name', nameInput.value);
+        storage.saveChampionName(category, cfg.file, nameInput.value);
         refreshCard(card);
       });
     }
 
     if (pointsInput) {
-      pointsInput.value = getStored(category, 'points', cfg.defaultPoints);
       pointsInput.addEventListener('input', () => {
-        setStored(category, 'points', pointsInput.value);
+        storage.saveChampionPoints(category, cfg.file, pointsInput.value);
         refreshCard(card);
       });
     }
 
     if (uploadInput) {
-      uploadInput.addEventListener('change', () => {
+      uploadInput.addEventListener('change', async () => {
         const file = uploadInput.files && uploadInput.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          setStored(category, 'photo', reader.result);
-          refreshCard(card);
-        };
-        reader.readAsDataURL(file);
         uploadInput.value = '';
+        if (!file) return;
+
+        const uploadLabel = card.querySelector('.ws-upload-btn');
+        const labelText = uploadLabel
+          ? Array.from(uploadLabel.childNodes).find(
+              (node) => node.nodeType === Node.TEXT_NODE
+            )
+          : null;
+
+        if (labelText) labelText.textContent = 'Subiendo…';
+
+        try {
+          await storage.uploadLeaderPhoto(category, cfg.file, file);
+          await refreshCard(card);
+        } catch (error) {
+          console.error('Error al subir la foto del líder:', error);
+        } finally {
+          if (labelText) labelText.textContent = 'Subir foto';
+        }
       });
     }
 
@@ -385,12 +389,13 @@
         link.click();
       });
     }
+
+    hydrateFields();
   }
 
-  async function init() {
+  function init() {
     const cards = document.querySelectorAll('.ws-champion-card');
     cards.forEach(bindCard);
-    await Promise.all(Array.from(cards).map(refreshCard));
   }
 
   if (document.readyState === 'loading') {

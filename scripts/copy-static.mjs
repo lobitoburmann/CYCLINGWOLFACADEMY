@@ -1,4 +1,4 @@
-import { cpSync, existsSync, lstatSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = process.cwd();
@@ -41,5 +41,13 @@ for (const directory of directories) {
   removeIfPresent(destination);
   cpSync(source, destination, { recursive: true });
 }
+
+const envScript = `window.WOLFSERIES_SUPABASE = ${JSON.stringify({
+  url: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+  anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
+  bucket: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "athlete-documents",
+})};\n`;
+
+writeFileSync(join(publicDir, "js", "wolfseries-env.js"), envScript, "utf8");
 
 console.log("Static assets copied to public/");

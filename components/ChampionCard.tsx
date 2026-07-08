@@ -8,13 +8,19 @@ import {
   FRAME_CONFIG,
   loadImage,
   renderToCanvas,
-  storageKey,
   type FrameCategory,
 } from "@/lib/champion-frame";
 import {
   CLASSIFICATIONS,
   type ClassificationKey,
 } from "@/lib/classifications";
+import {
+  loadChampionData,
+  resolvePhotoSrc,
+  saveChampionName,
+  saveChampionPoints,
+  uploadLeaderPhoto,
+} from "@/lib/wolfseries-config";
 
 type ChampionCardProps = {
   classification: ClassificationKey;
@@ -31,37 +37,48 @@ export function ChampionCard({
   const frame = FRAME_CONFIG[classification as FrameCategory];
   const fileInputRef = useRef<HTMLInputElement>(null);
   const exportCanvasRef = useRef<HTMLCanvasElement>(null);
+  const defaultPhotoPath = `/images/wolfseries/${frame.file}`;
 
   const [name, setName] = useState(defaultName);
   const [points, setPoints] = useState(
     defaultPoints === null ? "" : String(defaultPoints),
   );
-  const [photoSrc, setPhotoSrc] = useState(
-    `/images/wolfseries/${frame.file}`,
-  );
+  const [photoSrc, setPhotoSrc] = useState(defaultPhotoPath);
   const [hasCustomPhoto, setHasCustomPhoto] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    const savedName = localStorage.getItem(storageKey(classification, "name"));
-    const savedPoints = localStorage.getItem(
-      storageKey(classification, "points"),
-    );
-    const savedPhoto = localStorage.getItem(
-      storageKey(classification, "photo"),
-    );
+    let cancelled = false;
 
-    if (savedName) setName(savedName);
-    if (savedPoints !== null) setPoints(savedPoints);
-    if (savedPhoto) {
-      setPhotoSrc(savedPhoto);
-      setHasCustomPhoto(true);
+    async function hydrate() {
+      const saved = await loadChampionData(classification as FrameCategory);
+      if (cancelled) return;
+
+      if (saved.name) setName(saved.name);
+      if (saved.points !== null) setPoints(saved.points);
+
+      const resolved = await resolvePhotoSrc(
+        classification as FrameCategory,
+        saved.photoUrl,
+        defaultPhotoPath,
+      );
+      if (cancelled) return;
+
+      setPhotoSrc(resolved);
+      setHasCustomPhoto(resolved !== defaultPhotoPath);
     }
-  }, [classification]);
+
+    void hydrate();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [classification, defaultPhotoPath]);
 
   const persistName = useCallback(
     (value: string) => {
       setName(value);
-      localStorage.setItem(storageKey(classification, "name"), value);
+      void saveChampionName(classification as FrameCategory, value);
     },
     [classification],
   );
@@ -69,24 +86,29 @@ export function ChampionCard({
   const persistPoints = useCallback(
     (value: string) => {
       setPoints(value);
-      localStorage.setItem(storageKey(classification, "points"), value);
+      void saveChampionPoints(classification as FrameCategory, value);
     },
     [classification],
   );
 
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    event.target.value = "";
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result as string;
-      setPhotoSrc(dataUrl);
+    setIsUploading(true);
+    try {
+      const url = await uploadLeaderPhoto(
+        classification as FrameCategory,
+        file,
+      );
+      setPhotoSrc(url);
       setHasCustomPhoto(true);
-      localStorage.setItem(storageKey(classification, "photo"), dataUrl);
-    };
-    reader.readAsDataURL(file);
-    event.target.value = "";
+    } catch (error) {
+      console.error("Error al subir la foto del líder:", error);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleDownload = async () => {
@@ -182,9 +204,10 @@ export function ChampionCard({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="rounded-md bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white transition hover:bg-white/15"
+            disabled={isUploading}
+            className="rounded-md bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Subir foto
+            {isUploading ? "Subiendo…" : "Subir foto"}
           </button>
           <input
             ref={fileInputRef}

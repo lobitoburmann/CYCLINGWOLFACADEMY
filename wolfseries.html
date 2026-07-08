@@ -495,15 +495,8 @@
   </section>
 
   <!--
-    FOTOS DE CAMPEONES — subida manual al repo
-    Colocar la foto del ciclista (JPG, cualquier proporción) en images/wolfseries/:
-      lider-general.jpg      → Líder General
-      lider-montana.jpg      → Rey de la Montaña
-      lider-volantes.jpg     → Metas Volantes
-      mas-combativo.jpg      → Más Combativo
-      corredor-fecha.jpg     → Corredor de la Fecha
-    Al cambiar de líder: subir nueva foto, editar nombre y puntos en los campos de cada tarjeta.
-    Los valores se guardan en el navegador. Descargar imagen 1080×1350 para Instagram.
+    FOTOS DE CAMPEONES — Supabase Storage (wolfseries/) o localStorage como respaldo.
+    Subir foto, editar nombre y puntos en cada tarjeta. Descargar imagen 1080×1350 para Instagram.
   -->
 
   <!-- 2. CLASIFICACIÓN GENERAL -->
@@ -989,6 +982,8 @@
       rulesToggle.setAttribute('aria-expanded', open);
     });
   </script>
+  <script src="js/wolfseries-env.js"></script>
+  <script src="js/wolfseries-storage.js"></script>
   <script src="js/wolfseries-champions.js"></script>
 </body>
 </html>
