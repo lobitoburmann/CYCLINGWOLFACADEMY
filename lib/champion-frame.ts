@@ -48,13 +48,30 @@ export const FRAME_CONFIG: Record<FrameCategory, FrameConfig> = {
   },
 };
 
-export const STORAGE_PREFIX = "ws-champion-";
+export type StorageSlug =
+  | "general"
+  | "montana"
+  | "volantes"
+  | "combativo"
+  | "corredor";
+
+const CATEGORY_TO_SLUG: Record<FrameCategory, StorageSlug> = {
+  general: "general",
+  montana: "montana",
+  metasVolantes: "volantes",
+  masCombativo: "combativo",
+  corredorFecha: "corredor",
+};
+
+export function getStorageSlug(category: FrameCategory): StorageSlug {
+  return CATEGORY_TO_SLUG[category];
+}
 
 export function storageKey(
-  category: FrameCategory,
-  field: "name" | "points" | "photo",
-) {
-  return `${STORAGE_PREFIX}${category}-${field}`;
+  slug: StorageSlug,
+  field: "foto" | "nombre" | "puntos",
+): string {
+  return `wolfseries-${field}-${slug}`;
 }
 
 function roundRect(

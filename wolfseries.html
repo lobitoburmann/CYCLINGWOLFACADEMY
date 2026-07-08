@@ -495,7 +495,7 @@
   </section>
 
   <!--
-    FOTOS DE CAMPEONES — Supabase Storage (wolfseries/) o localStorage como respaldo.
+    FOTOS DE CAMPEONES — localStorage (base64). Solo persiste en este navegador.
     Subir foto, editar nombre y puntos en cada tarjeta. Descargar imagen 1080×1350 para Instagram.
   -->
 
@@ -519,7 +519,7 @@
               <div class="ws-champion-tools">
                 <div class="ws-champion-tools-row">
                   <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
-                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                  <button type="button" class="ws-download-btn">Descargar imagen con marco</button>
                 </div>
                 <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
                 <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="53">
@@ -618,7 +618,7 @@
               <div class="ws-champion-tools">
                 <div class="ws-champion-tools-row">
                   <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
-                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                  <button type="button" class="ws-download-btn">Descargar imagen con marco</button>
                 </div>
                 <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
                 <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="41">
@@ -657,7 +657,7 @@
               <div class="ws-champion-tools">
                 <div class="ws-champion-tools-row">
                   <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
-                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                  <button type="button" class="ws-download-btn">Descargar imagen con marco</button>
                 </div>
                 <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Matías Medel">
                 <input type="number" class="ws-points-input" placeholder="Puntos" min="0" value="10">
@@ -692,7 +692,7 @@
               <div class="ws-champion-tools">
                 <div class="ws-champion-tools-row">
                   <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
-                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                  <button type="button" class="ws-download-btn">Descargar imagen con marco</button>
                 </div>
                 <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Sergio Vargas">
                 <input type="number" class="ws-points-input" placeholder="Puntos" min="0">
@@ -721,7 +721,7 @@
               <div class="ws-champion-tools">
                 <div class="ws-champion-tools-row">
                   <label class="ws-upload-btn">Subir foto<input type="file" accept="image/*" class="ws-upload-input" hidden></label>
-                  <button type="button" class="ws-download-btn" hidden>Descargar imagen</button>
+                  <button type="button" class="ws-download-btn">Descargar imagen con marco</button>
                 </div>
                 <input type="text" class="ws-name-input" placeholder="Nombre del campeón" value="Pato Otarola">
                 <input type="number" class="ws-points-input" placeholder="Puntos" min="0">
@@ -982,7 +982,6 @@
       rulesToggle.setAttribute('aria-expanded', open);
     });
   </script>
-  <script src="js/wolfseries-env.js"></script>
   <script src="js/wolfseries-storage.js"></script>
   <script src="js/wolfseries-champions.js"></script>
 </body>

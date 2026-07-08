@@ -16,7 +16,6 @@ import {
 } from "@/lib/classifications";
 import {
   loadChampionData,
-  resolvePhotoSrc,
   saveChampionName,
   saveChampionPoints,
   uploadLeaderPhoto,
@@ -37,48 +36,26 @@ export function ChampionCard({
   const frame = FRAME_CONFIG[classification as FrameCategory];
   const fileInputRef = useRef<HTMLInputElement>(null);
   const exportCanvasRef = useRef<HTMLCanvasElement>(null);
-  const defaultPhotoPath = `/images/wolfseries/${frame.file}`;
 
   const [name, setName] = useState(defaultName);
   const [points, setPoints] = useState(
     defaultPoints === null ? "" : String(defaultPoints),
   );
-  const [photoSrc, setPhotoSrc] = useState(defaultPhotoPath);
-  const [hasCustomPhoto, setHasCustomPhoto] = useState(false);
+  const [photoSrc, setPhotoSrc] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    const saved = loadChampionData(classification as FrameCategory);
 
-    async function hydrate() {
-      const saved = await loadChampionData(classification as FrameCategory);
-      if (cancelled) return;
-
-      if (saved.name) setName(saved.name);
-      if (saved.points !== null) setPoints(saved.points);
-
-      const resolved = await resolvePhotoSrc(
-        classification as FrameCategory,
-        saved.photoUrl,
-        defaultPhotoPath,
-      );
-      if (cancelled) return;
-
-      setPhotoSrc(resolved);
-      setHasCustomPhoto(resolved !== defaultPhotoPath);
-    }
-
-    void hydrate();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [classification, defaultPhotoPath]);
+    if (saved.name) setName(saved.name);
+    if (saved.points !== null) setPoints(saved.points);
+    if (saved.photoUrl) setPhotoSrc(saved.photoUrl);
+  }, [classification]);
 
   const persistName = useCallback(
     (value: string) => {
       setName(value);
-      void saveChampionName(classification as FrameCategory, value);
+      saveChampionName(classification as FrameCategory, value);
     },
     [classification],
   );
@@ -86,7 +63,7 @@ export function ChampionCard({
   const persistPoints = useCallback(
     (value: string) => {
       setPoints(value);
-      void saveChampionPoints(classification as FrameCategory, value);
+      saveChampionPoints(classification as FrameCategory, value);
     },
     [classification],
   );
@@ -103,7 +80,6 @@ export function ChampionCard({
         file,
       );
       setPhotoSrc(url);
-      setHasCustomPhoto(true);
     } catch (error) {
       console.error("Error al subir la foto del líder:", error);
     } finally {
@@ -115,7 +91,7 @@ export function ChampionCard({
     const canvas = exportCanvasRef.current;
     if (!canvas) return;
 
-    const photo = await loadImage(photoSrc);
+    const photo = photoSrc ? await loadImage(photoSrc) : null;
     const parsedPoints = points.trim() === "" ? null : Number(points);
 
     renderToCanvas(
@@ -149,7 +125,7 @@ export function ChampionCard({
             src={photoSrc}
             alt={`${name}, ${cfg.kind.toLowerCase()} ${cfg.label} WolfSeries 2026`}
             fill
-            unoptimized={hasCustomPhoto}
+            unoptimized
             className="object-cover"
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
           />
@@ -221,7 +197,7 @@ export function ChampionCard({
             onClick={handleDownload}
             className="rounded-md bg-emerald-500/15 px-3 py-1.5 text-[11px] font-medium text-emerald-400 transition hover:bg-emerald-500/25"
           >
-            Descargar imagen
+            Descargar imagen con marco
           </button>
         </div>
         <input

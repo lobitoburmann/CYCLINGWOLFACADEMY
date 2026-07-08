@@ -3,7 +3,6 @@
 
   const EXPORT_W = 1080;
   const EXPORT_H = 1350;
-  const IMAGE_BASE = 'images/wolfseries/';
 
   const CATEGORIES = {
     general: {
@@ -269,10 +268,6 @@
     renderChampionFrame(canvas.getContext('2d'), EXPORT_W, EXPORT_H, photo, category, name, points);
   }
 
-  function photoUrl(category) {
-    return `${IMAGE_BASE}${CATEGORIES[category].file}`;
-  }
-
   function loadPhoto(src) {
     return new Promise(resolve => {
       const img = new Image();
@@ -297,7 +292,6 @@
     const category = card.dataset.championCategory;
     const cfg = CATEGORIES[category];
     const canvas = card.querySelector('.ws-champion-canvas');
-    const downloadBtn = card.querySelector('.ws-download-btn');
     const nameInput = card.querySelector('.ws-name-input');
     const pointsInput = card.querySelector('.ws-points-input');
 
@@ -306,17 +300,9 @@
 
     renderToCanvas(canvas, null, category, name, points);
 
-    const saved = await storage.loadChampionData(category, cfg.file);
-    const resolvedSrc = await storage.resolvePhotoSrc(
-      category,
-      cfg.file,
-      saved.photoUrl,
-      photoUrl(category)
-    );
-
-    const photo = await loadPhoto(resolvedSrc);
+    const saved = await storage.loadChampionData(category);
+    const photo = saved.photoUrl ? await loadPhoto(saved.photoUrl) : null;
     renderToCanvas(canvas, photo, category, name, points);
-    if (downloadBtn) downloadBtn.hidden = false;
     syncMeta(card, name, points);
   }
 
@@ -329,7 +315,7 @@
     const downloadBtn = card.querySelector('.ws-download-btn');
 
     async function hydrateFields() {
-      const saved = await storage.loadChampionData(category, cfg.file);
+      const saved = await storage.loadChampionData(category);
       if (nameInput) {
         nameInput.value = saved.name != null ? saved.name : cfg.defaultName;
       }
@@ -341,14 +327,14 @@
 
     if (nameInput) {
       nameInput.addEventListener('input', () => {
-        storage.saveChampionName(category, cfg.file, nameInput.value);
+        storage.saveChampionName(category, nameInput.value);
         refreshCard(card);
       });
     }
 
     if (pointsInput) {
       pointsInput.addEventListener('input', () => {
-        storage.saveChampionPoints(category, cfg.file, pointsInput.value);
+        storage.saveChampionPoints(category, pointsInput.value);
         refreshCard(card);
       });
     }
@@ -369,7 +355,7 @@
         if (labelText) labelText.textContent = 'Subiendo…';
 
         try {
-          await storage.uploadLeaderPhoto(category, cfg.file, file);
+          await storage.uploadLeaderPhoto(category, file);
           await refreshCard(card);
         } catch (error) {
           console.error('Error al subir la foto del líder:', error);
