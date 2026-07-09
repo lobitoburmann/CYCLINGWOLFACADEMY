@@ -322,7 +322,19 @@
       if (pointsInput) {
         pointsInput.value = saved.points != null ? saved.points : cfg.defaultPoints;
       }
+
+      // Mostrar cache local al instante, luego sincronizar con Vercel Blob.
       await refreshCard(card);
+
+      try {
+        const remoteUrl = await storage.fetchLeaderPhotoUrl(category);
+        if (remoteUrl) {
+          storage.saveChampionPhotoUrl(category, remoteUrl);
+          await refreshCard(card);
+        }
+      } catch (error) {
+        console.error('Error al cargar la foto del líder:', error);
+      }
     }
 
     if (nameInput) {

@@ -2,6 +2,7 @@ import {
   getStorageSlug,
   storageKey,
   type FrameCategory,
+  type StorageSlug,
 } from "@/lib/champion-frame";
 
 export type WolfSeriesChampionData = {
@@ -59,20 +60,55 @@ export function saveChampionPoints(
   setLocal(category, "puntos", points);
 }
 
+export function saveChampionPhotoUrl(
+  category: FrameCategory,
+  url: string,
+): void {
+  setLocal(category, "foto", url);
+}
+
+export async function fetchLeaderPhotoUrl(
+  category: FrameCategory,
+): Promise<string | null> {
+  const classification = getStorageSlug(category);
+  const response = await fetch(
+    `/api/upload-leader-photo?classification=${encodeURIComponent(classification)}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("No se pudo obtener la foto del líder");
+  }
+
+  const data = (await response.json()) as { url?: string | null };
+  return data.url ?? null;
+}
+
 export async function uploadLeaderPhoto(
   category: FrameCategory,
   file: File,
 ): Promise<string> {
-  const dataUrl = await readFileAsDataUrl(file);
-  setLocal(category, "foto", dataUrl);
-  return dataUrl;
-}
+  const classification: StorageSlug = getStorageSlug(category);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("classification", classification);
 
-function readFileAsDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
+  const response = await fetch("/api/upload-leader-photo", {
+    method: "POST",
+    body: formData,
   });
+
+  if (!response.ok) {
+    const payload = (await response.json().catch(() => null)) as {
+      error?: string;
+    } | null;
+    throw new Error(payload?.error || "No se pudo subir la foto");
+  }
+
+  const data = (await response.json()) as { url?: string };
+  if (!data.url) {
+    throw new Error("La API no devolvió una URL");
+  }
+
+  saveChampionPhotoUrl(category, data.url);
+  return data.url;
 }

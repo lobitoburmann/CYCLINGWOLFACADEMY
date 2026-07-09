@@ -15,8 +15,10 @@ import {
   type ClassificationKey,
 } from "@/lib/classifications";
 import {
+  fetchLeaderPhotoUrl,
   loadChampionData,
   saveChampionName,
+  saveChampionPhotoUrl,
   saveChampionPoints,
   uploadLeaderPhoto,
 } from "@/lib/wolfseries-config";
@@ -45,11 +47,27 @@ export function ChampionCard({
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    const saved = loadChampionData(classification as FrameCategory);
+    let cancelled = false;
+    const category = classification as FrameCategory;
+    const saved = loadChampionData(category);
 
     if (saved.name) setName(saved.name);
     if (saved.points !== null) setPoints(saved.points);
     if (saved.photoUrl) setPhotoSrc(saved.photoUrl);
+
+    fetchLeaderPhotoUrl(category)
+      .then((url) => {
+        if (cancelled || !url) return;
+        saveChampionPhotoUrl(category, url);
+        setPhotoSrc(url);
+      })
+      .catch((error) => {
+        console.error("Error al cargar la foto del líder:", error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [classification]);
 
   const persistName = useCallback(
