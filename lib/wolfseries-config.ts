@@ -2,8 +2,12 @@ import {
   getStorageSlug,
   storageKey,
   type FrameCategory,
-  type StorageSlug,
 } from "@/lib/champion-frame";
+import { leaderPhotoPathname } from "@/lib/leader-photo";
+import {
+  LEADER_PHOTO_BUCKET,
+  supabase,
+} from "@/lib/supabase";
 
 export type WolfSeriesChampionData = {
   name: string | null;
@@ -33,6 +37,23 @@ function setLocal(
     localStorage.setItem(storageKey(getStorageSlug(category), field), value);
   } catch {
     // ignore quota errors
+  }
+}
+
+function publicLeaderPhotoUrl(category: FrameCategory): string {
+  const pathname = leaderPhotoPathname(getStorageSlug(category));
+  const { data } = supabase.storage
+    .from(LEADER_PHOTO_BUCKET)
+    .getPublicUrl(pathname);
+  return data.publicUrl;
+}
+
+async function remotePhotoExists(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: "HEAD", cache: "no-store" });
+    return response.ok;
+  } catch {
+    return false;
   }
 }
 
@@ -70,45 +91,30 @@ export function saveChampionPhotoUrl(
 export async function fetchLeaderPhotoUrl(
   category: FrameCategory,
 ): Promise<string | null> {
-  const classification = getStorageSlug(category);
-  const response = await fetch(
-    `/api/upload-leader-photo?classification=${encodeURIComponent(classification)}`,
-  );
-
-  if (!response.ok) {
-    throw new Error("No se pudo obtener la foto del líder");
-  }
-
-  const data = (await response.json()) as { url?: string | null };
-  return data.url ?? null;
+  const url = publicLeaderPhotoUrl(category);
+  const exists = await remotePhotoExists(url);
+  return exists ? url : null;
 }
 
 export async function uploadLeaderPhoto(
   category: FrameCategory,
   file: File,
 ): Promise<string> {
-  const classification: StorageSlug = getStorageSlug(category);
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("classification", classification);
+  const pathname = leaderPhotoPathname(getStorageSlug(category));
 
-  const response = await fetch("/api/upload-leader-photo", {
-    method: "POST",
-    body: formData,
-  });
+  const { error } = await supabase.storage
+    .from(LEADER_PHOTO_BUCKET)
+    .upload(pathname, file, {
+      upsert: true,
+      contentType: file.type || "image/jpeg",
+      cacheControl: "3600",
+    });
 
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as {
-      error?: string;
-    } | null;
-    throw new Error(payload?.error || "No se pudo subir la foto");
+  if (error) {
+    throw new Error(error.message || "No se pudo subir la foto");
   }
 
-  const data = (await response.json()) as { url?: string };
-  if (!data.url) {
-    throw new Error("La API no devolvió una URL");
-  }
-
-  saveChampionPhotoUrl(category, data.url);
-  return data.url;
+  const url = `${publicLeaderPhotoUrl(category)}?t=${Date.now()}`;
+  saveChampionPhotoUrl(category, url);
+  return url;
 }

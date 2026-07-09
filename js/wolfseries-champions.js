@@ -323,7 +323,7 @@
         pointsInput.value = saved.points != null ? saved.points : cfg.defaultPoints;
       }
 
-      // Mostrar cache local al instante, luego sincronizar con Vercel Blob.
+      // Mostrar cache local al instante, luego sincronizar con Supabase Storage.
       await refreshCard(card);
 
       try {
