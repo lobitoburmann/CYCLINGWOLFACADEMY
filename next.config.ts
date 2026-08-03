@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
         source: "/",
         destination: "/index.html",
       },
+      {
+        source: "/kine",
+        destination: "/kine.html",
+      },
     ];
   },
 };
