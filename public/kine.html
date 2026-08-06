@@ -98,9 +98,14 @@ a.prog:hover .more{color:var(--white)}
 @media(max-width:900px){.c3,.c2,.progs,.fases,.uni .nodes{grid-template-columns:1fr}.dots{display:none}}
 
 /* program detail overlay */
-.overlay{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;scroll-snap-type:y mandatory;display:none}
+.overlay{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;display:none}
 .overlay.open{display:block}
 .overlay .pg{display:none}
+.overlay .mk{display:none}
+.overlay .slide{min-height:auto;scroll-snap-align:none;padding:5vh 8vw}
+.overlay .slide:first-child{padding-top:7vh}
+.overlay .slide:not(:first-child){padding-top:0;margin-top:-2vh}
+.overlay .slide:not(:first-child) .topkick{display:none}
 .ovclose{position:fixed;top:4.5vh;right:8vw;z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--white);font-size:16px;line-height:1;cursor:pointer;transition:.2s;font-family:'JetBrains Mono',monospace}
 .ovclose:hover{border-color:var(--red);color:var(--red);transform:rotate(90deg)}
 .packmsg{display:flex;flex-direction:column;justify-content:flex-start;padding:26px 10px 8px;gap:2px;font-family:'Saira',sans-serif;font-style:italic;font-weight:900;font-size:clamp(22px,2.3vw,32px);line-height:1.02;letter-spacing:-.01em}
